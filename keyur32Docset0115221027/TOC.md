@@ -1,7 +1,7 @@
 # [Index](index.md)
-# [OneDrive Graph API](https://docs.microsoft.com/microsoft-graph/api-reference/v1.0/resources/onedrive.md?toc=keyur32Docset0115221027)
-# [OneDrive Graph API2](https://review.docs.microsoft.com/en-us/microsoft-graph/api-reference/v1.0/resources/onedrive.md?toc=keyur32Docset0115221027)
-# [OneDrive Graph API3](https://docs.microsoft.com/en-us/microsoft-graph/api-reference/v1.0/resources/onedrive.md?toc=microsoft-graph)
+# [OneDrive Graph API-b](https://docs.microsoft.com/microsoft-graph/api-reference/v1.0/resources/onedrive)
+# [OneDrive Graph API2-b](https://review.docs.microsoft.com/en-us/microsoft-graph/api-reference/v1.0/resources/onedrive?toc= keyur32Docset0115221027)
+# [OneDrive Graph API3](https://review.docs.microsoft.com/en-us/microsoft-graph/api-reference/v1.0/resources/onedrive?toc= keyur32Docset0115221027)
 
 ## [Drives](api-reference/v1.0/resources/drive.md?toc=microsoft-graph)
 ### [Get drive](api-reference/v1.0/api/drive_get.md)
