@@ -3,7 +3,7 @@
     "content": [
       {
         "files": [
-          "**/*.md", "**.json"
+          "**/*.md", "**/*.json"
         ],
         "exclude": [
           "**/obj/**",
