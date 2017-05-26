@@ -1,11 +1,11 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "MSGraph",
-    "description": "MSGraph",
-    "version": "2.0"
+    "title": "OneDrive API",
+    "description": "Who cares",
+    "version": "1.0"
   },
-  "host": "graph.microsoft.com",
+  "host": "service.org",
   "basePath": "/",
   "schemes": [
     "https"
@@ -17,21 +17,20 @@
     "application/json"
   ],
   "paths": {
-    "/me/drive/root": {
+    "/drive": {
       "get": {
-        "summary": "Example",
-        "parameters": [
-          {
-            "name": "if-none-match",
-            "in": "header",
-            "description": "If this request header is included and the eTag (or cTag) provided matches the current tag on the file, an `HTTP 304 Not Modified` response is returned.",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "summary": "HTTP request",
+        "parameters": [],
         "security": [
           {
-            "microsoftAccount": []
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
           }
         ],
         "responses": {
@@ -43,20 +42,2717 @@
           }
         }
       }
+    },
+    "/drive/items/root": {
+      "get": {
+        "summary": "Get an Item and its children in a single call",
+        "description": "You can use the [`expand`](../odata/optional-query-parameters.md) query string\r\nparameter to include the children of an item in the same call as retrieving the\r\nmetadata of an item.",
+        "parameters": [],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/items/{item-id}": {
+      "get": {
+        "summary": "Response",
+        "description": "If successful, this method returns an [driveItem][item-resource] resource in\r\nthe response body.",
+        "parameters": [
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "HTTP request",
+        "parameters": [
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Response",
+        "description": "If successful, this call returns a `204 No Content` response to indicate that\r\nresource was deleted and there was nothing to return.",
+        "parameters": [
+          {
+            "name": "if-match",
+            "in": "header",
+            "description": "If this request header is included and the eTag (or cTag) provided does not match the current tag on the item, a 412 Precondition Failed response is returned and the item will not be deleted.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/drive/items/{item-id}/": {
+      "get": {
+        "summary": "Determine if a custom uploaded thumbnail exists",
+        "description": "**Note:** Custom thumbnails are only available on OneDrive Personal.",
+        "parameters": [
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/items/{item-id}/children": {
+      "get": {
+        "summary": "Getting multiple thumbnails",
+        "description": "**Note:** Expanding the thumbnails collection only available for OneDrive Personal.",
+        "parameters": [
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "HTTP request",
+        "parameters": [
+          {
+            "name": "folder-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/items/{parent-id}/children/{filename}/content": {
+      "put": {
+        "summary": "HTTP request",
+        "parameters": [
+          {
+            "name": "parent-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "filename",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/items/{item-id}/content": {
+      "get": {
+        "summary": "Response",
+        "description": "Pre-authenticated URLs are only valid for a short period of time (a few minutes) and do not require an `Authorization` header to access.",
+        "parameters": [
+          {
+            "name": "if-none-match",
+            "in": "header",
+            "description": "If this request header is included and the eTag (or cTag) provided matches the current tag on the file, an HTTP 304 Not Modified response is returned.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "description": "Specify the format the item's content should be downloaded as.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": null,
+            "in": "query",
+            "description": "Converts the item into PDF format.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/drive/items/{item-id}/copy": {
+      "post": {
+        "summary": "Response",
+        "description": "Returns details about how to [monitor the progress](../misc/long-running-actions.md) of the copy, upon accepting the request.",
+        "parameters": [
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/drive/items/{item-id}/createLink": {
+      "post": {
+        "summary": "HTTP request",
+        "description": "**Note:** This method has a different signature for Microsoft Graph and OneDrive API. See [OneDrive API endpoint differences](/direct-endpoint-differences.md) for more information.",
+        "parameters": [
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/items/{item-id}/delta": {
+      "get": {
+        "summary": "HTTP request",
+        "description": "**Note:** This method has a different signature for Microsoft Graph and OneDrive API. See [OneDrive API endpoint differences](/direct-endpoint-differences.md) for more information.",
+        "parameters": [
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/items/{item-id}/invite": {
+      "post": {
+        "summary": "Sending a Sharing Invitation (Preview)",
+        "description": "**Note:** This functionality is a preview and should only be used for evaluating\r\nand testing. Some details of this API are expected to be changed before this\r\nfunctionality is finally released.",
+        "parameters": [
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/items/{item-id}/permissions": {
+      "get": {
+        "summary": "HTTP request",
+        "parameters": [
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/items/{item-id}/permissions/{permission-id}": {
+      "get": {
+        "summary": "Retrieve individual permissions",
+        "description": "In addition to enumerating all permissions on an item, if you know the\r\npermission-id for a particular set of permissions, you can retrieve the details\r\nby performing a GET on the permissions collection.",
+        "parameters": [
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "permission-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "HTTP request",
+        "parameters": [
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "permission-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "HTTP Request",
+        "parameters": [
+          {
+            "name": "if-match",
+            "in": "header",
+            "description": "If this request header is included and the etag provided does not match the current etag on the file, a 412 Precondition Failed response is returned.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "permission-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/drive/items/{item-id}/subscriptions/{id}": {
+      "patch": {
+        "summary": "Response",
+        "description": "If the subscription is patched successfully then the resulting subscription\r\nobject is returned:",
+        "parameters": [
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/items/{item-id}/thumbnails": {
+      "get": {
+        "summary": "Enumerate available thumbnails",
+        "description": "To enumerate the available thumbnails for an item, you make the following request using the\r\n**thumbnails** collection on any item.",
+        "parameters": [
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/items/{item-id}/thumbnails/0/source/content": {
+      "put": {
+        "summary": "Upload a custom thumbnail on an item",
+        "description": "**Note:** Custom thumbnails are only available on OneDrive Personal.",
+        "parameters": [
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/drive/items/{item-id}/thumbnails/{thumb-id}/{size}": {
+      "get": {
+        "summary": "Retrieve a single thumbnail",
+        "description": "**Note:** custom sizes are only supported on OneDrive Personal.",
+        "parameters": [
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "thumb-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/items/{item-id}/thumbnails/{thumb-id}/{size}/content": {
+      "get": {
+        "summary": "Retrieve thumbnail content",
+        "description": "You can directly retrieve the content of the thumbnail directly by requesting the\r\n**content** property of the thumbnail.",
+        "parameters": [
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "thumb-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/drive/recent": {
+      "get": {
+        "summary": "Recently used files",
+        "description": "The response is a collection of [driveItem resources](../resources/item.md).\r\nThey are ordered by most recently used first.",
+        "parameters": [],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/root": {
+      "get": {
+        "summary": "Expanding collections",
+        "description": "The request returns the collection items, with the children collection expanded.",
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      },
+      "head": {
+        "summary": "HEAD requests",
+        "description": "In this example, you can see that requesting the root of your OneDrive will respond with\r\nsimply `200 OK`.",
+        "parameters": [],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/drive/root:/{item-path}:/createUploadSession": {
+      "post": {
+        "summary": "Create an upload session",
+        "description": "To specify a non-default conflict behavior provide the `item` parameter in the\r\nrequest body with the appropriate value for the `@microsoft.graph.conflictBehavior` instance annotation.",
+        "parameters": [
+          {
+            "name": "item-path",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/root/children": {
+      "get": {
+        "summary": "HTTP request",
+        "parameters": [
+          {
+            "name": null,
+            "in": "header",
+            "description": "If this request header is included and the eTag (or cTag) provided matches the current tag on the file, an HTTP 304 Not Modified response is returned.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Response",
+        "description": "If successful, this method returns an [driveItem][item-resource] in\r\nthe response body.",
+        "parameters": [],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/root/delta": {
+      "get": {
+        "summary": "HTTP request",
+        "description": "**Note:** This method has a different signature for Microsoft Graph and OneDrive API. See [OneDrive API endpoint differences](/direct-endpoint-differences.md) for more information.",
+        "parameters": [],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/root/search": {
+      "get": {
+        "summary": "Filterable properties",
+        "description": "Filtering on other properties which are not optimized can result in the following\r\nbehaviors:",
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/root/search(q='{search-text}')": {
+      "get": {
+        "summary": "Search request",
+        "description": "**Note:** Make sure to properly query string encode any characters in the query\r\nparameter.",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "The query text used to search for items. Values may be matched across several fields including filename, metadata, and file content.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "search-text",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/root:{item-path}:/content": {
+      "put": {
+        "summary": "HTTP request",
+        "parameters": [
+          {
+            "name": "item-path",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/shared": {
+      "get": {
+        "summary": "List items shared from a drive",
+        "description": "This returns a collection of [driveItem resources](../resources/item.md) that enumerates\r\nthe set of items that have been shared by the current user.",
+        "parameters": [],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/sharedWithMe": {
+      "get": {
+        "summary": "List Shared With Me Items",
+        "description": "This returns a collection of [driveItem resources](../resources/item.md) that enumerates\r\nthe set of items that have been shared with the current user.",
+        "parameters": [],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drive/special/{special-folder-name}": {
+      "get": {
+        "summary": "Response",
+        "description": "The response to a GET for the special folder will be the folder's **Item**\r\nresource. You can use this method of addressing a special folder with any OneDrive API\r\ncall you would normally make to a folder, instead of addressing the folder\r\nby id or path.",
+        "parameters": [
+          {
+            "name": "special-folder-name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      },
+      "head": {
+        "summary": "HEAD requests for special folders",
+        "description": "If you request a special folder that doesn't exist by using a GET request,\r\nthe special folder will be automatically created for you. You can test to see if the special folder\r\nexists by using a HEAD request. If the folder doesn't exist, the\r\nHEAD request will return a `404` response.",
+        "parameters": [
+          {
+            "name": "special-folder-name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/drive/special/{special-folder-name}/children": {
+      "get": {
+        "summary": "Response",
+        "description": "The next example will return the standard children collection as you would see from other\r\nways of addressing the folder.",
+        "parameters": [
+          {
+            "name": "special-folder-name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drives": {
+      "get": {
+        "summary": "HTTP request",
+        "parameters": [],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drives/{drive-id}": {
+      "get": {
+        "summary": "HTTP response",
+        "description": "If successful, this method returns a [Drive resource][drive-resource] for the matching drive in the response body.",
+        "parameters": [
+          {
+            "name": "drive-id",
+            "in": "path",
+            "description": "Required. The identifier for the drive requested.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/drives/{drive-id}/items/{item-id}/children": {
+      "get": {
+        "summary": "Enumerate the contents of a shared folder",
+        "description": "This example returns the children of the shared folder, by calling into the\r\nparent drive of the shared folder.",
+        "parameters": [
+          {
+            "name": "drive-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/shares/{sharingTokenOrUrl}": {
+      "get": {
+        "summary": "HTTP Response",
+        "description": "This method returns an [Share resource](../resources/shareRoot.md) for the root of\r\nthe shared item(s). The items that are shared can be accessed using the `root`\r\nrelationship of the Share resource.",
+        "parameters": [
+          {
+            "name": "sharingTokenOrUrl",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/shares/{sharingTokenOrUrl}/root": {
+      "get": {
+        "summary": "Example",
+        "description": "This request asks for the root item that was shared, which can either be the\r\nshared item (when a single item has been shared) or a collection of items. By\r\nincluding the `?expand=children` parameter, the result will return information\r\nfrom a single call that will be useful for either single or multiple shared items.",
+        "parameters": [
+          {
+            "name": "sharingTokenOrUrl",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/sites": {
+      "get": {
+        "summary": "Response",
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/sites/{site-id}/sites": {
+      "get": {
+        "summary": "Response",
+        "parameters": [
+          {
+            "name": "site-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions": {
+      "post": {
+        "summary": "Response",
+        "description": "If the subscription is added, then a `201 Created` response is returned that\r\nincludes the newly created subscription object.",
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{id}": {
+      "delete": {
+        "summary": "Response",
+        "description": "If the subscription is found and successfully deleted, then a `204 No Content`\r\nresponse is returned:",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": [
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder",
+              "onedrive.readonly",
+              "onedrive.readwrite",
+              "onedrive.appfolder"
+            ]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        }
+      }
     }
   },
-  "definitions": {},
+  "definitions": {
+    "oauth2_tokenResponse": {
+      "properties": {
+        "token_type": {
+          "type": "string"
+        },
+        "expires_in": {
+          "type": "int64"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "access_token": {
+          "type": "string"
+        },
+        "refresh_token": {
+          "type": "string"
+        }
+      }
+    },
+    "oneDrive_audio": {
+      "properties": {
+        "album": {
+          "type": "string",
+          "description": "The title of the album for this audio file."
+        },
+        "albumArtist": {
+          "type": "string",
+          "description": "The artist named on the album for the audio file."
+        },
+        "artist": {
+          "type": "string",
+          "description": "The performing artist for the audio file."
+        },
+        "bitrate": {
+          "type": "int64",
+          "description": "Bitrate expressed in kbps."
+        },
+        "composers": {
+          "type": "string",
+          "description": "The name of the composer of the audio file."
+        },
+        "copyright": {
+          "type": "string",
+          "description": "Copyright information for the audio file."
+        },
+        "disc": {
+          "type": "int64",
+          "description": "The number of the disc this audio file came from."
+        },
+        "discCount": {
+          "type": "int64",
+          "description": "The total number of discs in this album."
+        },
+        "duration": {
+          "type": "int64",
+          "description": "Duration of the audio file, expressed in milliseconds"
+        },
+        "genre": {
+          "type": "string",
+          "description": "The genre of this audio file."
+        },
+        "hasDrm": {
+          "type": "boolean",
+          "description": "Indicates if the file is protected with digital rights management."
+        },
+        "isVariableBitrate": {
+          "type": "boolean",
+          "description": "Indicates if the file is encoded with a variable bitrate."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the audio file."
+        },
+        "track": {
+          "type": "int64",
+          "description": "The number of the track on the original disc for this audio file."
+        },
+        "trackCount": {
+          "type": "int64",
+          "description": "The total number of tracks on the original disc for this audio file."
+        },
+        "year": {
+          "type": "int64",
+          "description": "The year the audio file was recorded."
+        }
+      }
+    },
+    "oneDrive_deleted": {
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "Describes the delete state of the item."
+        }
+      }
+    },
+    "oneDrive_fileSystemInfo": {
+      "properties": {
+        "createdDateTime": {
+          "type": "datetimeoffset",
+          "description": "The UTC date and time the file was created on a client."
+        },
+        "lastAccessedDateTime": {
+          "type": "datetimeoffset",
+          "description": "The UTC date and time the file was last accessed on a client."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "The UTC date and time the file was last modified on a client."
+        }
+      }
+    },
+    "oneDrive_file": {
+      "properties": {
+        "mimeType": {
+          "type": "string"
+        },
+        "hashes": {
+          "$ref": "#/definitions/oneDrive_hashes"
+        },
+        "processingMetadata": {
+          "type": "boolean"
+        }
+      }
+    },
+    "oneDrive_folderView": {
+      "properties": {
+        "sortBy": {
+          "type": "string",
+          "description": "The method by which the folder should be sorted."
+        },
+        "sortDescending": {
+          "type": "string"
+        },
+        "viewType": {
+          "type": "string",
+          "description": "The type of view that should be used to represent the folder."
+        }
+      }
+    },
+    "oneDrive_folder": {
+      "properties": {
+        "childCount": {
+          "type": "int64",
+          "description": "Number of children contained immediately within this container."
+        },
+        "view": {
+          "$ref": "#/definitions/oneDrive_folderView",
+          "description": "A collection of properties defining the recommended view for the folder."
+        }
+      }
+    },
+    "oneDrive_hashes": {
+      "properties": {
+        "crc32Hash": {
+          "type": "string",
+          "description": "The bytes of the CRC32 value of the file contents, in little endian order."
+        },
+        "sha1Hash": {
+          "type": "string",
+          "description": "The bytes of the SHA1 hash of the file contents."
+        },
+        "quickXorHash": {
+          "type": "string",
+          "description": "A proprietary hash of the file contents."
+        }
+      }
+    },
+    "oneDrive_image": {
+      "properties": {
+        "width": {
+          "type": "int64",
+          "description": "Width of the image, in pixels."
+        },
+        "height": {
+          "type": "int64",
+          "description": "Height of the image, in pixels."
+        }
+      }
+    },
+    "oneDrive_invitation": {
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "The email address provided for the recipient of the sharing invitation. Read-only."
+        },
+        "signInRequired": {
+          "type": "boolean",
+          "description": "If true the recipient of the invitation needs to sign in in order to access the shared item. Read-only."
+        },
+        "invitedBy": {
+          "$ref": "#/definitions/oneDrive_identitySet",
+          "description": "Provides information about who sent the invitation that created this permission, if that information is available. Read-only."
+        }
+      }
+    },
+    "oneDrive_specialFolder": {
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "oneDrive_location": {
+      "properties": {
+        "altitude": {
+          "type": "float",
+          "description": "The altitude (height), in feet,  above sea level for the item."
+        },
+        "latitude": {
+          "type": "float",
+          "description": "The latitude, in decimal, for the item."
+        },
+        "longitude": {
+          "type": "float",
+          "description": "The longitude, in decimal, for the item."
+        }
+      }
+    },
+    "oneDrive_package": {
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "oneDrive_photo": {
+      "properties": {
+        "takenDateTime": {
+          "type": "datetimeoffset",
+          "description": "Represents the date and time the photo was taken."
+        },
+        "cameraMake": {
+          "type": "string",
+          "description": "Camera manufacturer."
+        },
+        "cameraModel": {
+          "type": "string",
+          "description": "Camera model."
+        },
+        "fNumber": {
+          "type": "float",
+          "description": "The F-stop value from the camera."
+        },
+        "exposureDenominator": {
+          "type": "float",
+          "description": "The denominator for the exposure time fraction from the camera."
+        },
+        "exposureNumerator": {
+          "type": "float",
+          "description": "The numerator for the exposure time fraction from the camera."
+        },
+        "focalLength": {
+          "type": "float",
+          "description": "The focal length from the camera."
+        },
+        "iso": {
+          "type": "int64",
+          "description": "The ISO value from the camera."
+        }
+      }
+    },
+    "oneDrive_quota": {
+      "properties": {
+        "total": {
+          "type": "int64",
+          "description": "Total allowed storage space, in bytes. Read-only."
+        },
+        "used": {
+          "type": "int64",
+          "description": "Total space used, in bytes. Read-only."
+        },
+        "remaining": {
+          "type": "int64",
+          "description": "Total space remaining before reaching the quota limit, in bytes. Read-only."
+        },
+        "deleted": {
+          "type": "int64",
+          "description": "Total space consumed by files in the recycle bin, in bytes. Read-only."
+        },
+        "state": {
+          "type": "string",
+          "description": "Enumeration value that indicates the state of the storage space. Read-only."
+        }
+      }
+    },
+    "oneDrive_remoteItem": {
+      "properties": {
+        "createdBy": {
+          "$ref": "#/definitions/oneDrive_identitySet",
+          "description": "Identity of the user, device, and application which created the item. Read-only."
+        },
+        "file": {
+          "$ref": "#/definitions/oneDrive_file",
+          "description": "Indicates that the remote item is a file."
+        },
+        "fileSystemInfo": {
+          "$ref": "#/definitions/oneDrive_fileSystemInfo",
+          "description": "Information about the remote item from the local file system."
+        },
+        "folder": {
+          "$ref": "#/definitions/oneDrive_folder",
+          "description": "Indicates that the remote item is a folder."
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the remote item in its drive."
+        },
+        "lastModifiedBy": {
+          "$ref": "#/definitions/oneDrive_identitySet",
+          "description": "Identity of the user, device, and application which last modified the item. Read-only."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "Date and time the item was last modified. Read-only."
+        },
+        "name": {
+          "type": "string",
+          "description": "Optional. Filename of the remote item."
+        },
+        "parentReference": {
+          "$ref": "#/definitions/oneDrive_itemReference",
+          "description": "Properties of the parent of the remote item."
+        },
+        "shared": {
+          "$ref": "#/definitions/oneDrive_shared",
+          "description": "Indicates that the item has been shared with others and provides information about the shared state of the item. Read-only."
+        },
+        "size": {
+          "type": "int64",
+          "description": "Size of the remote item."
+        },
+        "webUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "oneDrive_root": {
+      "properties": {}
+    },
+    "oneDrive_searchResult": {
+      "properties": {
+        "onClickTelemetryUrl": {
+          "type": "string",
+          "description": "A callback URL that is used to record telemetry information. The application should issue a GET on this URL if the user interacts with this item."
+        }
+      }
+    },
+    "oneDrive_shared": {
+      "properties": {
+        "owner": {
+          "$ref": "#/definitions/oneDrive_identitySet",
+          "description": "The identity of the user who owns the item that is shared."
+        },
+        "scope": {
+          "type": "string",
+          "description": "Indicates the scope of how the item is shared: anonymous, organization, or users."
+        }
+      }
+    },
+    "oneDrive_sharepointIds": {
+      "properties": {
+        "listId": {
+          "type": "string",
+          "description": "The unique identifier (guid) for the item's list in SharePoint."
+        },
+        "listItemId": {
+          "type": "string",
+          "description": "An integer identifier for the item within the containing list."
+        },
+        "listItemUniqueId": {
+          "type": "string",
+          "description": "The unique identifier (guid) for the item within OneDrive for Busienss or a SharePoint site."
+        },
+        "siteId": {
+          "type": "string",
+          "description": "The unique identifier (guid) for the item's site collection (SPSite)."
+        },
+        "siteUrl": {
+          "type": "string",
+          "description": "The SharePoint URL for the site that contains the item."
+        },
+        "webId": {
+          "type": "string",
+          "description": "The unique identifier (guid) for the item's site (SPWeb)."
+        }
+      }
+    },
+    "oneDrive_sharingLink": {
+      "properties": {
+        "application": {
+          "$ref": "#/definitions/oneDrive_identity",
+          "description": "Information about the application that created the sharing link."
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of the link created."
+        },
+        "scope": {
+          "type": "string",
+          "description": "The scope of the link represented by this permission. Value anonymous indicates the link is usable by anyone, organization indicates the link is only usable for users signed into the same tenant."
+        },
+        "webHtml": {
+          "type": "string",
+          "description": "For embeddable links, this property contains the HTML code for an <iframe> element that will embed the item in a webpage."
+        },
+        "webUrl": {
+          "type": "string",
+          "description": "A URL that opens the item in the browser on the OneDrive website."
+        }
+      }
+    },
+    "oneDrive_siteCollection": {
+      "properties": {
+        "hostname": {
+          "type": "string",
+          "description": "The hostname for the site collection. Read-only."
+        }
+      }
+    },
+    "oneDrive_video": {
+      "properties": {
+        "bitrate": {
+          "type": "int64",
+          "description": "Bit rate of the video in bits per second."
+        },
+        "duration": {
+          "type": "int64",
+          "description": "Duration of the file in milliseconds."
+        },
+        "height": {
+          "type": "int64",
+          "description": "Height of the video, in pixels."
+        },
+        "width": {
+          "type": "int64",
+          "description": "Width of the video, in pixels."
+        }
+      }
+    },
+    "oneDrive_driveAppAction": {
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "availableOn": {
+          "$ref": "#/definitions/oneDrive_availableOn"
+        }
+      }
+    },
+    "oneDriveAddins_fileHandlerManifest": {
+      "properties": {
+        "id": {
+          "type": "guid"
+        },
+        "type": {
+          "type": "string"
+        },
+        "properties": {
+          "type": "collection"
+        }
+      }
+    },
+    "oneDriveAddins_keyValuePair": {
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "oneDrive_driveApp": {
+      "properties": {
+        "id": {
+          "type": "guid"
+        },
+        "application": {
+          "$ref": "#/definitions/oneDrive_identity"
+        },
+        "fileHandler": {
+          "$ref": "#/definitions/oneDrive_fileHandler"
+        },
+        "actions": {
+          "type": "collection"
+        }
+      }
+    },
+    "oneDrive_availableOn": {
+      "properties": {
+        "file": {
+          "$ref": "#/definitions/oneDrive_availableOnFile"
+        },
+        "folder": {
+          "$ref": "#/definitions/oneDrive_availableOnFolder"
+        },
+        "allowMultiSelect": {
+          "type": "boolean"
+        }
+      }
+    },
+    "oneDrive_availableOnFile": {
+      "properties": {
+        "extensions": {
+          "type": "collection"
+        }
+      }
+    },
+    "oneDrive_availableOnFolder": {
+      "properties": {}
+    },
+    "oneDrive_inviteParameters": {
+      "properties": {
+        "requireSignIn": {
+          "type": "boolean"
+        },
+        "sendInvitation": {
+          "type": "boolean"
+        },
+        "roles": {
+          "type": "collection"
+        },
+        "recipients": {
+          "type": "collection"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "oneDrive_asyncOperationStatus": {
+      "properties": {
+        "operation": {
+          "type": "string",
+          "description": "The type of job being run."
+        },
+        "percentageComplete": {
+          "type": "float",
+          "description": "A value between 0 and 100 that indicates the percentage complete."
+        },
+        "status": {
+          "type": "string",
+          "description": "A string value that maps to an enumeration of possible values about the status of the job."
+        }
+      }
+    },
+    "oneDrive_baseItem": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the drive. Read-only."
+        },
+        "createdBy": {
+          "$ref": "#/definitions/microsoft_graph_identitySet",
+          "description": "Identity of the user, device, or application which created the item. Read-only."
+        },
+        "createdDateTime": {
+          "type": "datetimeoffset",
+          "description": "Date and time of item creation. Read-only."
+        },
+        "description": {
+          "type": "string"
+        },
+        "eTag": {
+          "type": "string",
+          "description": "ETag for the item. Read-only."
+        },
+        "lastModifiedBy": {
+          "$ref": "#/definitions/microsoft_graph_identitySet",
+          "description": "Identity of the user, device, and application which last modified the item. Read-only."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "Date and time the item was last modified. Read-only."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the item. Read-write."
+        },
+        "parentReference": {
+          "$ref": "#/definitions/microsoft_graph_itemReference",
+          "description": "Parent information, if the item has a parent. Read-write."
+        },
+        "webUrl": {
+          "type": "string",
+          "description": "URL that displays the resource in the browser. Read-only."
+        }
+      }
+    },
+    "oneDrive_drive": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the drive."
+        },
+        "createdBy": {
+          "$ref": "#/definitions/oneDrive_identitySet",
+          "description": "Identity of the user, device, and application which created the drive. Read-only."
+        },
+        "createdDateTime": {
+          "type": "datetimeoffset",
+          "description": "Date and time of drive creation. Read-only."
+        },
+        "description": {
+          "type": "string",
+          "description": "Provide a user-visible description of the drive. Read-write."
+        },
+        "driveType": {
+          "type": "string",
+          "description": "Enumerated value that identifies the type of drive account. OneDrive drives will show as personal, OneDrive for Business as business and SharePoint document libraries as documentLibrary."
+        },
+        "items": {
+          "type": "collection",
+          "description": "All items contained in the drive. This collection cannot be enumerated."
+        },
+        "lastModifiedBy": {
+          "$ref": "#/definitions/oneDrive_identitySet",
+          "description": "Identity of the user, device, and application which last modified the drive. Read-only."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "Date and time the drive was last modified. Read-only."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the drive. Read-only."
+        },
+        "owner": {
+          "$ref": "#/definitions/oneDrive_identitySet",
+          "description": "The user account that owns the drive. Owner may not be available in all scenarios, depending on permissions granted to the application."
+        },
+        "quota": {
+          "$ref": "#/definitions/oneDrive_quota",
+          "description": "Information about the drive's storage space quota. Quota is not available unless the calling user is the owner of the drive."
+        },
+        "root": {
+          "$ref": "#/definitions/oneDrive_item",
+          "description": "The root folder of the drive."
+        },
+        "special": {
+          "type": "collection",
+          "description": "Collection of common folders available in OneDrive."
+        },
+        "webUrl": {
+          "type": "string",
+          "description": "URL that displays the drive in the browser. Read-only."
+        }
+      }
+    },
+    "oneDrive_error": {
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/odata_error"
+        }
+      }
+    },
+    "odata_error": {
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "innererror": {
+          "$ref": "#/definitions/odata_error"
+        }
+      }
+    },
+    "oneDrive_identity": {
+      "properties": {
+        "displayName": {
+          "type": "string",
+          "description": "The identity's display name. Note that this may not always be available or up to date. For example, if a user changes their display name, the API may show the new value in a future response, but the items associated with the user won't show up as having changed when using delta."
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the identity."
+        },
+        "thumbnails": {
+          "$ref": "#/definitions/oneDrive_thumbnailSet"
+        }
+      }
+    },
+    "oneDrive_identitySet": {
+      "properties": {
+        "application": {
+          "$ref": "#/definitions/oneDrive_identity",
+          "description": "Optional. The application associated with this action."
+        },
+        "device": {
+          "$ref": "#/definitions/oneDrive_identity",
+          "description": "Optional. The device associated with this action."
+        },
+        "user": {
+          "$ref": "#/definitions/oneDrive_identity",
+          "description": "Optional. The user associated with this action."
+        }
+      }
+    },
+    "oneDrive_item": {
+      "properties": {
+        "audio": {
+          "$ref": "#/definitions/oneDrive_audio",
+          "description": "Audio metadata, if the item is an audio file. Read-only."
+        },
+        "cTag": {
+          "type": "string",
+          "description": "An eTag for the content of the item. This eTag is not changed if only the metadata is changed. Note This property is not returned if the Item is a folder. Read-only."
+        },
+        "deleted": {
+          "$ref": "#/definitions/oneDrive_deleted",
+          "description": "Information about the deleted state of the item. Read-only."
+        },
+        "description": {
+          "type": "string",
+          "description": "Provides a user-visible description of the item. Read-write."
+        },
+        "file": {
+          "$ref": "#/definitions/oneDrive_file",
+          "description": "File metadata, if the item is a file. Read-only."
+        },
+        "fileSystemInfo": {
+          "$ref": "#/definitions/oneDrive_fileSystemInfo",
+          "description": "File system information on client. Read-write."
+        },
+        "folder": {
+          "$ref": "#/definitions/oneDrive_folder",
+          "description": "Folder metadata, if the item is a folder. Read-only."
+        },
+        "image": {
+          "$ref": "#/definitions/oneDrive_image",
+          "description": "Image metadata, if the item is an image. Read-only."
+        },
+        "location": {
+          "$ref": "#/definitions/oneDrive_location",
+          "description": "Location metadata, if the item has location data. Read-only."
+        },
+        "package": {
+          "$ref": "#/definitions/oneDrive_package",
+          "description": "If present, indicates that this item is a package instead of a folder or file. Packages are treated like files in some contexts and folders in others. Read-only."
+        },
+        "photo": {
+          "$ref": "#/definitions/oneDrive_photo",
+          "description": "Photo metadata, if the item is a photo. Read-only."
+        },
+        "remoteItem": {
+          "$ref": "#/definitions/oneDrive_remoteItem",
+          "description": "Remote item data, if the item is shared from a drive other than the one being accessed. Read-only."
+        },
+        "root": {
+          "$ref": "#/definitions/oneDrive_root",
+          "description": "If this property is non-null, it indicates that the driveItem is the top-most driveItem in the drive."
+        },
+        "searchResult": {
+          "$ref": "#/definitions/oneDrive_searchResult",
+          "description": "Search metadata, if the item is from a search result."
+        },
+        "shared": {
+          "$ref": "#/definitions/oneDrive_shared",
+          "description": "Indicates that the item has been shared with others and provides information about the shared state of the item. Read-only."
+        },
+        "sharepointIds": {
+          "$ref": "#/definitions/oneDrive_sharepointIds",
+          "description": "Returns identifiers useful for SharePoint REST compatibility. Read-only."
+        },
+        "size": {
+          "type": "int64",
+          "description": "Size of the item in bytes. Read-only."
+        },
+        "specialFolder": {
+          "$ref": "#/definitions/oneDrive_specialFolder",
+          "description": "If the current item is also available as a special folder, this facet is returned. Read-only."
+        },
+        "video": {
+          "$ref": "#/definitions/oneDrive_video",
+          "description": "Video metadata, if the item is a video. Read-only."
+        },
+        "webDavUrl": {
+          "type": "string",
+          "description": "WebDAV compatible URL for the item."
+        },
+        "content": {
+          "$ref": "#/definitions/Edm_Stream",
+          "description": "The content stream, if the item represents a file."
+        },
+        "children": {
+          "type": "collection",
+          "description": "Collection containing Item objects for the immediate children of Item. Only items representing folders have children. Read-only. Nullable."
+        },
+        "thumbnails": {
+          "type": "collection",
+          "description": "Collection containing ThumbnailSet objects associated with the item. For more info, see getting thumbnails. Read-only. Nullable."
+        },
+        "permissions": {
+          "type": "collection",
+          "description": "The set of permissions for the item. Read-only. Nullable."
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the item within the Drive. Read-only."
+        },
+        "createdBy": {
+          "$ref": "#/definitions/oneDrive_identitySet",
+          "description": "Identity of the user, device, and application which created the item. Read-only."
+        },
+        "createdDateTime": {
+          "type": "datetimeoffset",
+          "description": "Date and time of item creation. Read-only."
+        },
+        "eTag": {
+          "type": "string",
+          "description": "eTag for the entire item (metadata + content). Read-only."
+        },
+        "lastModifiedBy": {
+          "$ref": "#/definitions/oneDrive_identitySet",
+          "description": "Identity of the user, device, and application which last modified the item. Read-only."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "Date and time the item was last modified. Read-only."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the item (filename and extension). Read-write."
+        },
+        "parentReference": {
+          "$ref": "#/definitions/oneDrive_itemReference",
+          "description": "Parent information, if the item has a parent. Read-write."
+        },
+        "webUrl": {
+          "type": "string",
+          "description": "URL that displays the resource in the browser. Read-only."
+        },
+        "@microsoft_graph_conflictBehavior": {
+          "type": "string",
+          "description": "The conflict resolution behavior for actions that create a new item. You can use the values fail, replace, or rename. The default for PUT is replace. An item will never be returned with this annotation. Write-only. � � � � � � � � � � � � � � �"
+        },
+        "@microsoft_graph_downloadUrl": {
+          "type": "string",
+          "description": "A URL that can be used to download this file's content. Authentication is not required with this URL. Read-only."
+        },
+        "@microsoft_graph_sourceUrl": {
+          "type": "string",
+          "description": "When issuing a PUT request, this instance annotation can be used to instruct the service to download the contents of the URL, and store it as the file. Write-only."
+        }
+      }
+    },
+    "oneDrive_itemReference": {
+      "properties": {
+        "driveId": {
+          "type": "string",
+          "description": "Unique identifier of the drive instance that contains the item. Read-only."
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the item in the drive. Read-only."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the item being referenced. Read-only."
+        },
+        "path": {
+          "type": "string",
+          "description": "Path that can be used to navigate to the item. Read-only."
+        },
+        "shareId": {
+          "type": "string",
+          "description": "A unique identifier for a shared resource that can be accessed via the Shares API."
+        },
+        "sharepointIds": {
+          "$ref": "#/definitions/oneDrive_sharepointIds",
+          "description": "Returns identifiers useful for SharePoint REST compatibility. Read-only."
+        }
+      }
+    },
+    "oneDrive_permission": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the permission among all permissions on the item. Read-only."
+        },
+        "grantedTo": {
+          "$ref": "#/definitions/oneDrive_identitySet",
+          "description": "For user type permissions, the details of the users & applications for this permission. Read-only."
+        },
+        "inheritedFrom": {
+          "$ref": "#/definitions/oneDrive_itemReference",
+          "description": "Provides a reference to the ancestor of the current permission, if it is inherited from an ancestor. Read-only."
+        },
+        "invitation": {
+          "$ref": "#/definitions/oneDrive_invitation",
+          "description": "Details of any associated sharing invitation for this permission. Read-only."
+        },
+        "link": {
+          "$ref": "#/definitions/oneDrive_sharingLink",
+          "description": "Provides the link details of the current permission, if it is a link type permissions. Read-only."
+        },
+        "roles": {
+          "type": "collection"
+        },
+        "shareId": {
+          "type": "string",
+          "description": "A unique token that can be used to access this shared item via the **shares** API. Read-only."
+        }
+      }
+    },
+    "oneDrive_recipients": {
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "The email address for the recipient, if the recipient has an associated email address."
+        },
+        "alias": {
+          "type": "string",
+          "description": "The alias of the domain object, for cases where an email address is unavailable (e.g. security groups)."
+        },
+        "objectId": {
+          "type": "string",
+          "description": "The unique identifier for the recipient in the directory."
+        }
+      }
+    },
+    "oneDrive_share": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "$ref": "#/definitions/oneDrive_identitySet"
+        },
+        "items": {
+          "type": "collection",
+          "description": "All items contained in the sharing root. This collection cannot be enumerated."
+        },
+        "root": {
+          "$ref": "#/definitions/oneDrive_item",
+          "description": "The root item being shared. This is an driveItem that represents either the shared item or a container of shared items, when multiple items have been shared."
+        }
+      }
+    },
+    "oneDrive_site": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the item. Read-only."
+        },
+        "root": {
+          "$ref": "#/definitions/oneDrive_root",
+          "description": "If present, indicates that this is the root site in the site collection. Read-only."
+        },
+        "sharepointIds": {
+          "$ref": "#/definitions/oneDrive_sharepointIds",
+          "description": "Returns identifiers useful for SharePoint REST compatibility. Read-only."
+        },
+        "siteCollection": {
+          "$ref": "#/definitions/oneDrive_siteCollection",
+          "description": "Provides details about the site's site collection. Available only on the root site. Read-only."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The full title for the site. Read-only."
+        },
+        "drive": {
+          "$ref": "#/definitions/oneDrive_drive",
+          "description": "The default drive (document library) for this site."
+        },
+        "drives": {
+          "type": "collection",
+          "description": "The collection of drives (document libraries) under this site."
+        },
+        "items": {
+          "type": "collection",
+          "description": "Used to address any item contained in this site. This collection cannot be enumerated."
+        },
+        "sites": {
+          "type": "collection",
+          "description": "The collection of the sub-sites under this site."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name / title of the item."
+        },
+        "createdDateTime": {
+          "type": "datetimeoffset",
+          "description": "The date and time the item was created. Read-only."
+        },
+        "description": {
+          "type": "string",
+          "description": "The descriptive text for the site."
+        },
+        "eTag": {
+          "type": "string"
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "The date and time the item was last modified. Read-only."
+        },
+        "webUrl": {
+          "type": "string",
+          "description": "URL that displays the item in the browser. Read-only."
+        }
+      }
+    },
+    "oneDrive_subscription": {
+      "properties": {
+        "subscriptionId": {
+          "type": "string",
+          "description": "The unique identifier for the subscription resource. Read-only."
+        },
+        "clientState": {
+          "type": "string",
+          "description": "An optional string value that is passed back in the notification message for this subscription."
+        },
+        "expirationDateTime": {
+          "type": "datetimeoffset",
+          "description": "The date and time when the subscription will expire if not updated or renewed."
+        },
+        "notificationUrl": {
+          "type": "string",
+          "description": "The URL that notifications should be delivered to, if required for the specified notificationType."
+        },
+        "resource": {
+          "type": "string",
+          "description": "The relative path of the subscription within the drive. Read-only."
+        },
+        "changeType": {
+          "type": "string",
+          "description": "The type of changes that should generate notifications for this subscription. OneDrive only supports updated."
+        }
+      }
+    },
+    "oneDrive_thumbnail": {
+      "properties": {
+        "height": {
+          "type": "int64",
+          "description": "The height of the thumbnail, in pixels."
+        },
+        "sourceItemId": {
+          "type": "string",
+          "description": "The unique identifier of the item that provided the thumbnail. This is only available when a folder thumbnail is requested."
+        },
+        "url": {
+          "type": "string",
+          "description": "The URL used to fetch the thumbnail content."
+        },
+        "width": {
+          "type": "int64",
+          "description": "The width of the thumbnail, in pixels."
+        },
+        "content": {
+          "type": "stream",
+          "description": "The content stream for the thumbnail."
+        }
+      }
+    },
+    "oneDrive_thumbnailSet": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The id within the item. Read-only."
+        },
+        "large": {
+          "$ref": "#/definitions/oneDrive_thumbnail",
+          "description": "A 1920x1920 scaled thumbnail."
+        },
+        "medium": {
+          "$ref": "#/definitions/oneDrive_thumbnail",
+          "description": "A 176x176 scaled thumbnail."
+        },
+        "small": {
+          "$ref": "#/definitions/oneDrive_thumbnail",
+          "description": "A 48x48 cropped thumbnail."
+        },
+        "source": {
+          "$ref": "#/definitions/oneDrive_thumbnail",
+          "description": "A custom thumbnail image or the original image used to generate other thumbnails."
+        }
+      }
+    },
+    "oneDrive_uploadSession": {
+      "properties": {
+        "uploadUrl": {
+          "type": "string",
+          "description": "URL where fragment PUT requests should be directed."
+        },
+        "expirationDateTime": {
+          "type": "datetimeoffset",
+          "description": "Date and time when the upload session expires."
+        },
+        "nextExpectedRanges": {
+          "type": "collection",
+          "description": "An array of byte ranges the server is missing. Not always a full list of the missing ranges."
+        }
+      }
+    },
+    "oneDrive_viewDelta": {
+      "properties": {
+        "value": {
+          "type": "collection",
+          "description": "An array of [driveItem][item-resource] objects which have been created, modified, or deleted."
+        },
+        "@odata_nextLink": {
+          "type": "string",
+          "description": "A URL to retrieve the next available page of changes."
+        },
+        "@odata_deltaLink": {
+          "type": "string",
+          "description": "A URL returned instead of @odata.nextLink after all current changes have been returned. Used to read the next set of changes in the future."
+        },
+        "@microsoft_graph_token": {
+          "type": "string",
+          "description": "The unique token that can be used in a request to delta to get the next set of changes. In general the nextLink and deltaLink properties should be preferred over using the token value."
+        }
+      }
+    },
+    "oneDrive_webhookNotifiation": {
+      "properties": {
+        "subscriptionId": {
+          "type": "string",
+          "description": "The unique identifier for the subscription resource"
+        },
+        "expirationDateTime": {
+          "type": "datetimeoffset",
+          "description": "The date and time when the subscription will expire if not updated or renewed."
+        },
+        "resource": {
+          "type": "string",
+          "description": "URL to the item where the subscription is registered."
+        },
+        "clientState": {
+          "type": "string",
+          "description": "An optional string value that is passed back in the notification message for this subscription."
+        },
+        "changeType": {
+          "type": "string",
+          "description": "Indicates the type of change that generated the notification. For OneDrive, this will always be updated."
+        }
+      }
+    },
+    "oneDrive_typeTemplate": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for {type}."
+        },
+        "complexType": {
+          "$ref": "#/definitions/oneDrive_typeTemplate",
+          "description": "Complex type property with useful properties."
+        }
+      }
+    }
+  },
   "security": [
     {
-      "azure_auth": []
+      "microsoftAccount": []
     }
   ],
   "securityDefinitions": {
     "microsoftAccount": {
       "type": "oauth2",
-      "scopes": {},
+      "scopes": {
+        "offline_access": "Enables your app to work offline even when the user isn't active. This provides your app with a refresh_token that can be used to generate additional access tokens as necessary. This scope is not available for token flow.",
+        "files.read": "Grants read-only permission to all of a user's OneDrive files.",
+        "files.read.all": "Grants read-only permission to all of a user's OneDrive files, including files shared with the user.",
+        "files.readwrite": "Grants read and write permission to all of a user's OneDrive files.",
+        "files.readwrite.all": "Grants read and write permission to all of a user's OneDrive files, including files shared with the user.",
+        "onedrive.readonly": "Grants read-only permission to all of a user's OneDrive files, including files shared with the user.",
+        "onedrive.readwrite": "Grants read and write permission to all of a user's OneDrive files, including files shared with the user. To create sharing links, this scope is required.",
+        "onedrive.appfolder": "Grants read and write permissions to a specific folder for your application."
+      },
       "flow": "implicit",
-      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
+      "authorizationUrl": "https://login.live.com/oauth20_authorize.srf"
     }
   }
 }
