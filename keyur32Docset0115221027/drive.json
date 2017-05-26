@@ -40,7 +40,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "144fa0a1-7e3a-4346-8fe1-ce6c86c54791"
       }
     },
     "/drive/items/root": {
@@ -67,7 +68,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "d5a8a9de-c671-4a4b-b8b6-5deccc453f96"
       }
     },
     "/drive/items/{item-id}": {
@@ -101,7 +103,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "2a1cd77d-d4a4-49bb-8a58-6cd5f7d9ec31"
       },
       "patch": {
         "summary": "HTTP request",
@@ -132,7 +135,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "e4558fc8-5902-4743-961f-f431ba9dedff"
       },
       "delete": {
         "summary": "Response",
@@ -168,7 +172,8 @@
           "204": {
             "description": ""
           }
-        }
+        },
+        "operationId": "e56edefa-743b-4522-921c-60c3168cd686"
       }
     },
     "/drive/items/{item-id}/": {
@@ -202,7 +207,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "2f91fe6c-bd76-416a-af22-f6400f0d00e2"
       }
     },
     "/drive/items/{item-id}/children": {
@@ -236,7 +242,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "7d77fdfc-3b3a-4278-8383-d82820b37023"
       },
       "post": {
         "summary": "HTTP request",
@@ -267,7 +274,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "a40f9079-64c8-4b8b-b3b0-46631f965743"
       }
     },
     "/drive/items/{parent-id}/children/{filename}/content": {
@@ -306,7 +314,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "5bf6f908-6ae8-4cc7-9b8c-7f1ea78872ed"
       }
     },
     "/drive/items/{item-id}/content": {
@@ -358,7 +367,8 @@
           "302": {
             "description": ""
           }
-        }
+        },
+        "operationId": "3c0c7816-497e-4820-8d34-25084def341a"
       }
     },
     "/drive/items/{item-id}/copy": {
@@ -389,7 +399,8 @@
           "202": {
             "description": ""
           }
-        }
+        },
+        "operationId": "7bab3c11-bd35-4d20-8630-ed0bf92c9759"
       }
     },
     "/drive/items/{item-id}/createLink": {
@@ -423,7 +434,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "fac333c3-b5e4-45ff-8c66-54d1db4524d5"
       }
     },
     "/drive/items/{item-id}/delta": {
@@ -457,7 +469,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "1ad456f3-f9b7-4b65-9b07-91281e8f4a9a"
       }
     },
     "/drive/items/{item-id}/invite": {
@@ -491,7 +504,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "1d35e703-0a7b-47c6-99da-c837c49ae60d"
       }
     },
     "/drive/items/{item-id}/permissions": {
@@ -524,7 +538,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "aff08f8d-edd0-4484-9ae2-31bfc9cd1319"
       }
     },
     "/drive/items/{item-id}/permissions/{permission-id}": {
@@ -564,7 +579,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "b9ed1aca-6e83-4dac-848f-52b704b673a7"
       },
       "patch": {
         "summary": "HTTP request",
@@ -601,7 +617,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "8394bbf6-7a68-495c-825e-5e1671f57def"
       },
       "delete": {
         "summary": "HTTP Request",
@@ -642,7 +659,8 @@
           "204": {
             "description": ""
           }
-        }
+        },
+        "operationId": "b6464e28-c6b5-492a-a277-c4a1604106d3"
       }
     },
     "/drive/items/{item-id}/subscriptions/{id}": {
@@ -682,7 +700,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "bd18a811-dc40-468e-a861-00372a71cd44"
       }
     },
     "/drive/items/{item-id}/thumbnails": {
@@ -716,7 +735,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "bfc82d85-80b5-40b7-b06d-5a692e80786f"
       }
     },
     "/drive/items/{item-id}/thumbnails/0/source/content": {
@@ -747,7 +767,8 @@
           "200": {
             "description": ""
           }
-        }
+        },
+        "operationId": "2ab36c52-585b-4119-acc2-8d6313286d43"
       }
     },
     "/drive/items/{item-id}/thumbnails/{thumb-id}/{size}": {
@@ -793,7 +814,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "0d8db616-70bf-4c76-9b08-586916654aae"
       }
     },
     "/drive/items/{item-id}/thumbnails/{thumb-id}/{size}/content": {
@@ -836,7 +858,8 @@
           "302": {
             "description": ""
           }
-        }
+        },
+        "operationId": "70af3615-6bdd-484f-ac97-e5bb31539696"
       }
     },
     "/drive/recent": {
@@ -863,7 +886,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "6d6c5d4b-1641-427a-bc1b-710836108b5e"
       }
     },
     "/drive/root": {
@@ -889,7 +913,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "9f2f7f89-720f-4162-9aa2-cd9776385482"
       },
       "head": {
         "summary": "HEAD requests",
@@ -911,7 +936,8 @@
           "200": {
             "description": ""
           }
-        }
+        },
+        "operationId": "8ebdd976-d9e9-4d28-b291-00a9d844d52e"
       }
     },
     "/drive/root:/{item-path}:/createUploadSession": {
@@ -945,7 +971,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "e560734f-fdea-4c74-a588-4f809d7a3b7f"
       }
     },
     "/drive/root/children": {
@@ -979,7 +1006,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "b2467e3b-b75c-4607-ac3b-9ac8baaecf14"
       },
       "post": {
         "summary": "Response",
@@ -1004,7 +1032,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "e894a1b7-60b5-4ab3-8243-f375a57224f6"
       }
     },
     "/drive/root/delta": {
@@ -1031,7 +1060,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "60a29f7e-118f-4320-81fa-81f752075598"
       }
     },
     "/drive/root/search": {
@@ -1057,7 +1087,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "0bfd786e-c62d-4d01-8fd9-42a5d49640de"
       }
     },
     "/drive/root/search(q='{search-text}')": {
@@ -1098,7 +1129,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "69592ee0-7c83-4bd7-aee2-9e6d73f499b2"
       }
     },
     "/drive/root:{item-path}:/content": {
@@ -1131,7 +1163,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "22a55e87-3988-46bc-98c1-87c4ffcc65cb"
       }
     },
     "/drive/shared": {
@@ -1158,7 +1191,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "99ff1f0b-5894-423b-a1bc-51227358dac9"
       }
     },
     "/drive/sharedWithMe": {
@@ -1185,7 +1219,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "4d33f4da-23d7-4ac9-a5b2-fadcd81a3fbb"
       }
     },
     "/drive/special/{special-folder-name}": {
@@ -1219,7 +1254,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "434bc4cd-4ffb-4ef1-8d04-c9aad935031f"
       },
       "head": {
         "summary": "HEAD requests for special folders",
@@ -1248,7 +1284,8 @@
           "404": {
             "description": ""
           }
-        }
+        },
+        "operationId": "ad7516f0-8457-40db-ba33-20d8bec14ce9"
       }
     },
     "/drive/special/{special-folder-name}/children": {
@@ -1282,7 +1319,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "36368424-0de0-4627-9d8b-b6431162b993"
       }
     },
     "/drives": {
@@ -1308,7 +1346,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "bfa3ac10-4964-4ce9-946a-3f79d8d1fdd4"
       }
     },
     "/drives/{drive-id}": {
@@ -1343,7 +1382,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "25096768-7456-4cec-bd8b-635b9da09520"
       }
     },
     "/drives/{drive-id}/items/{item-id}/children": {
@@ -1383,7 +1423,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "f4dc8204-fe91-44b2-b731-3b294c64170c"
       }
     },
     "/shares/{sharingTokenOrUrl}": {
@@ -1417,7 +1458,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "71ff5952-1f3b-4761-8671-f420ae6f3964"
       }
     },
     "/shares/{sharingTokenOrUrl}/root": {
@@ -1451,7 +1493,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "0c15013c-409d-495e-b949-5cbcd684e452"
       }
     },
     "/sites": {
@@ -1476,7 +1519,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "208a9d5c-8d64-4660-b123-941f0b071ca7"
       }
     },
     "/sites/{site-id}/sites": {
@@ -1509,7 +1553,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "8abef863-8208-4dad-aab2-431a5a7953f9"
       }
     },
     "/subscriptions": {
@@ -1535,7 +1580,8 @@
               "type": "collection"
             }
           }
-        }
+        },
+        "operationId": "3a22d7d6-0faf-4300-8c4d-fbbfeb1eb917"
       }
     },
     "/subscriptions/{id}": {
@@ -1566,7 +1612,8 @@
           "204": {
             "description": ""
           }
-        }
+        },
+        "operationId": "15ec9122-1fef-41af-8a0e-95fa76ee02ac"
       }
     }
   },
