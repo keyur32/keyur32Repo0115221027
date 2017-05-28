@@ -1,0 +1,3630 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "MSGraph",
+    "description": "MSGraph",
+    "version": "2.0"
+  },
+  "host": "service.org",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "paths": {
+    "/me/drive/items/{item-id}": {
+      "patch": {
+        "summary": "Response",
+        "description": "Here is an example of the response. This response is truncated for readability.",
+        "parameters": [
+          {
+            "name": "if-match",
+            "in": "header",
+            "description": "If this request header is included and the eTag (or cTag) provided does not match the current eTag on the folder, a 412 Precondition Failed response is returned.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "item-id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        },
+        "operationId": "cae4e553-17c4-4e1f-9285-cac69c820530"
+      }
+    },
+    "/me/drive/root:/{item-path}:/content": {
+      "put": {
+        "summary": "Response",
+        "description": "Here is an example of the response.",
+        "parameters": [
+          {
+            "name": "item-path",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "microsoftAccount": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "type": "collection"
+            }
+          }
+        },
+        "operationId": "5d968fec-6bb3-4e2c-927c-aed29c60de89"
+      }
+    }
+  },
+  "definitions": {
+    "microsoft_graph_driveRecipient": {
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "The email address for the recipient, if the recipient has an associated email address."
+        },
+        "alias": {
+          "type": "string",
+          "description": "The alias of the domain object, for cases where an email address is unavailable (e.g. security groups)."
+        },
+        "objectId": {
+          "type": "string",
+          "description": "The unique identifier for the recipient in the directory."
+        }
+      }
+    },
+    "microsoft_graph_alternativeSecurityId": {
+      "properties": {
+        "identityProvider": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "type": {
+          "type": "int64"
+        }
+      }
+    },
+    "microsoft_graph_assignedLicense": {
+      "properties": {
+        "disabledPlans": {
+          "type": "collection",
+          "description": "A collection of the unique identifiers for plans that have been disabled."
+        },
+        "skuId": {
+          "type": "guid",
+          "description": "The unique identifier for the SKU."
+        }
+      }
+    },
+    "microsoft_graph_assignedPlan": {
+      "properties": {
+        "assignedDateTime": {
+          "type": "datetimeoffset",
+          "description": "The date and time at which the plan was assigned; for example: 2013-01-02T19:32:30Z. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "capabilityStatus": {
+          "type": "string",
+          "description": "For example, “Enabled”."
+        },
+        "service": {
+          "type": "string",
+          "description": "The name of the service; for example, “Exchange”."
+        },
+        "servicePlanId": {
+          "type": "guid",
+          "description": "A GUID that identifies the service plan."
+        }
+      }
+    },
+    "microsoft_graph_attachment": {
+      "properties": {
+        "contentType": {
+          "type": "string",
+          "description": "The MIME type."
+        },
+        "id": {
+          "type": "string",
+          "description": "Read-only."
+        },
+        "isInline": {
+          "type": "boolean",
+          "description": "true if the attachment is an inline attachment; otherwise, false."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "name": {
+          "type": "string",
+          "description": "The attachment's file name."
+        },
+        "size": {
+          "type": "int64",
+          "description": "The length of the attachment in bytes."
+        }
+      }
+    },
+    "microsoft_graph_attendee": {
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/microsoft_graph_responseStatus",
+          "description": "The attendee's response (none, accepted, declined, etc.) for the event and date-time that the response was sent."
+        },
+        "type": {
+          "type": "string",
+          "description": "The attendee type: Required, Optional, Resource."
+        },
+        "emailAddress": {
+          "$ref": "#/definitions/microsoft_graph_emailAddress",
+          "description": "Includes the name and SMTP address of the attendee."
+        }
+      }
+    },
+    "microsoft_graph_attendeeAvailability": {
+      "properties": {
+        "attendee": {
+          "$ref": "#/definitions/microsoft_graph_attendeeBase",
+          "description": "The type of attendee - whether it's a person or a resource, and whether required or optional if it's a person."
+        },
+        "availability": {
+          "type": "string",
+          "description": "The availability status of the attendee. Possible values are: free, tentative, busy, oof, workingElsewhere, unknown."
+        }
+      }
+    },
+    "microsoft_graph_attendeeBase": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The type of attendee. Possible values are: required, optional, resource. Currently if the attendee is a person, findMeetingTimes always considers the person is of the Required type."
+        },
+        "emailAddress": {
+          "$ref": "#/definitions/microsoft_graph_emailAddress",
+          "description": "Includes the name and SMTP address of the attendee."
+        }
+      }
+    },
+    "microsoft_graph_audio": {
+      "properties": {
+        "album": {
+          "type": "string",
+          "description": "The title of the album for this audio file."
+        },
+        "albumArtist": {
+          "type": "string",
+          "description": "The artist named on the album for the audio file."
+        },
+        "artist": {
+          "type": "string",
+          "description": "The performing artist for the audio file."
+        },
+        "bitrate": {
+          "type": "int64",
+          "description": "Bitrate expressed in kbps."
+        },
+        "composers": {
+          "type": "string",
+          "description": "The name of the composer of the audio file."
+        },
+        "copyright": {
+          "type": "string",
+          "description": "Copyright information for the audio file."
+        },
+        "disc": {
+          "type": "int64",
+          "description": "The number of the disc this audio file came from."
+        },
+        "discCount": {
+          "type": "int64",
+          "description": "The total number of discs in this album."
+        },
+        "duration": {
+          "type": "int64",
+          "description": "Duration of the audio file, expressed in milliseconds"
+        },
+        "genre": {
+          "type": "string",
+          "description": "The genre of this audio file."
+        },
+        "hasDrm": {
+          "type": "boolean",
+          "description": "Indicates if the file is protected with digital rights management."
+        },
+        "isVariableBitrate": {
+          "type": "boolean",
+          "description": "Indicates if the file is encoded with a variable bitrate."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the audio file."
+        },
+        "track": {
+          "type": "int64",
+          "description": "The number of the track on the original disc for this audio file."
+        },
+        "trackCount": {
+          "type": "int64",
+          "description": "The total number of tracks on the original disc for this audio file."
+        },
+        "year": {
+          "type": "int64",
+          "description": "The year the audio file was recorded."
+        }
+      }
+    },
+    "microsoft_graph_automaticRepliesSetting": {
+      "properties": {
+        "externalAudience": {
+          "type": "string",
+          "description": "The set of audience external to the signed-in user's organization who will receive the ExternalReplyMessage, if Status is AlwaysEnabled or Scheduled. Possible values are: none, contactsOnly, all."
+        },
+        "externalReplyMessage": {
+          "type": "string",
+          "description": "The automatic reply to send to the specified external audience, if Status is AlwaysEnabled or Scheduled."
+        },
+        "internalReplyMessage": {
+          "type": "string",
+          "description": "The automatic reply to send to the audience internal to the signed-in user's organization, if Status is AlwaysEnabled or Scheduled."
+        },
+        "scheduledEndDateTime": {
+          "$ref": "#/definitions/microsoft_graph_dateTimeTimeZone",
+          "description": "The date and time that automatic replies are set to end, if Status is set to Scheduled."
+        },
+        "scheduledStartDateTime": {
+          "$ref": "#/definitions/microsoft_graph_dateTimeTimeZone",
+          "description": "The date and time that automatic replies are set to begin, if Status is set to Scheduled."
+        },
+        "status": {
+          "type": "string",
+          "description": "Configurations status for automatic replies. Possible values are: disabled, alwaysEnabled, scheduled."
+        }
+      }
+    },
+    "microsoft_graph_calendar": {
+      "properties": {
+        "changeKey": {
+          "type": "string",
+          "description": "Identifies the version of the calendar object. Every time the calendar is changed, ChangeKey  changes as well. This allows Exchange to apply changes to the correct version of the object. Read-only."
+        },
+        "color": {
+          "type": "string",
+          "description": "Specifies the color theme to distinguish the calendar from other calendars in a UI. The property values are: LightBlue=0, LightGreen=1, LightOrange=2, LightGray=3, LightYellow=4, LightTeal=5, LightPink=6, LightBrown=7, LightRed=8, MaxColor=9, Auto=-1"
+        },
+        "id": {
+          "type": "string",
+          "description": "The group's unique identifier. Read-only."
+        },
+        "name": {
+          "type": "string",
+          "description": "The calendar name."
+        }
+      }
+    },
+    "microsoft_graph_calendarGroup": {
+      "properties": {
+        "changeKey": {
+          "type": "string",
+          "description": "Identifies the version of the calendar group. Every time the calendar group is changed, ChangeKey changes as well. This allows Exchange to apply changes to the correct version of the object. Read-only."
+        },
+        "classId": {
+          "type": "guid",
+          "description": "The class identifier. Read-only."
+        },
+        "id": {
+          "type": "string",
+          "description": "The group's unique identifier. Read-only."
+        },
+        "name": {
+          "type": "string",
+          "description": "The group name."
+        }
+      }
+    },
+    "microsoft_graph_chart": {
+      "properties": {
+        "height": {
+          "type": "int64",
+          "description": "Represents the height, in points, of the chart object."
+        },
+        "id": {
+          "type": "string",
+          "description": "Gets a chart based on its position in the collection. Read-only."
+        },
+        "left": {
+          "type": "int64",
+          "description": "The distance, in points, from the left side of the chart to the worksheet origin."
+        },
+        "name": {
+          "type": "string",
+          "description": "Represents the name of a chart object."
+        },
+        "top": {
+          "type": "int64",
+          "description": "Represents the distance, in points, from the top edge of the object to the top of row 1 (on a worksheet) or the top of the chart area (on a chart)."
+        },
+        "width": {
+          "type": "int64",
+          "description": "Represents the width, in points, of the chart object."
+        }
+      }
+    },
+    "microsoft_graph_chartaxis": {
+      "properties": {
+        "majorUnit": {
+          "type": "string",
+          "description": "Represents the interval between two major tick marks. Can be set to a numeric value or an empty string.  The returned value is always a number."
+        },
+        "maximum": {
+          "type": "string",
+          "description": "Represents the maximum value on the value axis.  Can be set to a numeric value or an empty string (for automatic axis values).  The returned value is always a number."
+        },
+        "minimum": {
+          "type": "string",
+          "description": "Represents the minimum value on the value axis. Can be set to a numeric value or an empty string (for automatic axis values).  The returned value is always a number."
+        },
+        "minorUnit": {
+          "type": "string",
+          "description": "Represents the interval between two minor tick marks. \"Can be set to a numeric value or an empty string (for automatic axis values). The returned value is always a number."
+        }
+      }
+    },
+    "microsoft_graph_chartAxisTitle": {
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Represents the axis title."
+        },
+        "visible": {
+          "type": "boolean",
+          "description": "A boolean that specifies the visibility of an axis title."
+        }
+      }
+    },
+    "microsoft_graph_chartDataLabels": {
+      "properties": {
+        "position": {
+          "type": "string",
+          "description": "DataLabelPosition value that represents the position of the data label. Possible values are: None, Center, InsideEnd, InsideBase, OutsideEnd, Left, Right, Top, Bottom, BestFit, Callout."
+        },
+        "separator": {
+          "type": "string",
+          "description": "String representing the separator used for the data labels on a chart."
+        },
+        "showBubbleSize": {
+          "type": "boolean",
+          "description": "Boolean value representing if the data label bubble size is visible or not."
+        },
+        "showCategoryName": {
+          "type": "boolean",
+          "description": "Boolean value representing if the data label category name is visible or not."
+        },
+        "showLegendKey": {
+          "type": "boolean",
+          "description": "Boolean value representing if the data label legend key is visible or not."
+        },
+        "showPercentage": {
+          "type": "boolean",
+          "description": "Boolean value representing if the data label percentage is visible or not."
+        },
+        "showSeriesName": {
+          "type": "boolean",
+          "description": "Boolean value representing if the data label series name is visible or not."
+        },
+        "showValue": {
+          "type": "boolean",
+          "description": "Boolean value representing if the data label value is visible or not."
+        }
+      }
+    },
+    "microsoft_graph_chartFont": {
+      "properties": {
+        "bold": {
+          "type": "boolean",
+          "description": "Represents the bold status of font."
+        },
+        "color": {
+          "type": "string",
+          "description": "HTML color code representation of the text color. E.g. #FF0000 represents Red."
+        },
+        "italic": {
+          "type": "boolean",
+          "description": "Represents the italic status of the font."
+        },
+        "name": {
+          "type": "string",
+          "description": "Font name (e.g. \"Calibri\")"
+        },
+        "size": {
+          "type": "int64",
+          "description": "Size of the font (e.g. 11)"
+        },
+        "underline": {
+          "type": "string",
+          "description": "Type of underline applied to the font. Possible values are: None, Single."
+        }
+      }
+    },
+    "microsoft_graph_chartGridLines": {
+      "properties": {
+        "visible": {
+          "type": "boolean",
+          "description": "Boolean value representing if the axis gridlines are visible or not."
+        }
+      }
+    },
+    "microsoft_graph_chartLegend": {
+      "properties": {
+        "overlay": {
+          "type": "boolean",
+          "description": "Boolean value for whether the chart legend should overlap with the main body of the chart."
+        },
+        "position": {
+          "type": "string",
+          "description": "Represents the position of the legend on the chart. Possible values are: Top, Bottom, Left, Right, Corner, Custom."
+        },
+        "visible": {
+          "type": "boolean",
+          "description": "A boolean value the represents the visibility of a ChartLegend object."
+        }
+      }
+    },
+    "microsoft_graph_chartLineFormat": {
+      "properties": {
+        "color": {
+          "type": "string",
+          "description": "HTML color code representing the color of lines in the chart."
+        }
+      }
+    },
+    "microsoft_graph_chartPoint": {
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "Returns the value of a chart point. Read-only."
+        }
+      }
+    },
+    "microsoft_graph_chartSeries": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Represents the name of a series in a chart."
+        }
+      }
+    },
+    "microsoft_graph_chartTitle": {
+      "properties": {
+        "overlay": {
+          "type": "boolean",
+          "description": "Boolean value representing if the chart title will overlay the chart or not."
+        },
+        "text": {
+          "type": "string",
+          "description": "Represents the title text of a chart."
+        },
+        "visible": {
+          "type": "boolean",
+          "description": "A boolean value the represents the visibility of a chart title object."
+        }
+      }
+    },
+    "microsoft_graph_chunkeduploadsessiondescriptor": {
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "microsoft_graph_contact": {
+      "properties": {
+        "assistantName": {
+          "type": "string",
+          "description": "The name of the contact's assistant."
+        },
+        "birthday": {
+          "type": "datetimeoffset",
+          "description": "The contact's birthday. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "businessAddress": {
+          "$ref": "#/definitions/microsoft_graph_physicalAddress",
+          "description": "The contact's business address."
+        },
+        "businessHomePage": {
+          "type": "string",
+          "description": "The business home page of the contact."
+        },
+        "businessPhones": {
+          "type": "collection",
+          "description": "The contact's business phone numbers."
+        },
+        "categories": {
+          "type": "collection",
+          "description": "The categories associated with the contact."
+        },
+        "changeKey": {
+          "type": "string",
+          "description": "Identifies the version of the contact. Every time the contact is changed, ChangeKey changes as well. This allows Exchange to apply changes to the correct version of the object."
+        },
+        "children": {
+          "type": "collection",
+          "description": "The names of the contact's children."
+        },
+        "companyName": {
+          "type": "string",
+          "description": "The name of the contact's company."
+        },
+        "createdDateTime": {
+          "type": "datetimeoffset",
+          "description": "The time the contact was created. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "department": {
+          "type": "string",
+          "description": "The contact's department."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The contact's display name."
+        },
+        "emailAddresses": {
+          "type": "collection",
+          "description": "The contact's email addresses."
+        },
+        "fileAs": {
+          "type": "string",
+          "description": "The name the contact is filed under."
+        },
+        "generation": {
+          "type": "string",
+          "description": "The contact's generation."
+        },
+        "givenName": {
+          "type": "string",
+          "description": "The contact's given name."
+        },
+        "homeAddress": {
+          "$ref": "#/definitions/microsoft_graph_physicalAddress",
+          "description": "The contact's home address."
+        },
+        "homePhones": {
+          "type": "collection",
+          "description": "The contact's home phone numbers."
+        },
+        "id": {
+          "type": "string",
+          "description": "The contact's unique identifier. Read-only."
+        },
+        "imAddresses": {
+          "type": "collection",
+          "description": "The contact's instant messaging (IM) addresses."
+        },
+        "initials": {
+          "type": "string",
+          "description": "The contact's initials."
+        },
+        "jobTitle": {
+          "type": "string",
+          "description": "The contact’s job title."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "The time the contact was modified. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "manager": {
+          "type": "string",
+          "description": "The name of the contact's manager."
+        },
+        "middleName": {
+          "type": "string",
+          "description": "The contact's middle name."
+        },
+        "mobilePhone": {
+          "type": "string",
+          "description": "The contact's mobile phone number."
+        },
+        "nickName": {
+          "type": "string",
+          "description": "The contact's nickname."
+        },
+        "officeLocation": {
+          "type": "string",
+          "description": "The location of the contact's office."
+        },
+        "otherAddress": {
+          "$ref": "#/definitions/microsoft_graph_physicalAddress",
+          "description": "Other addresses for the contact."
+        },
+        "parentFolderId": {
+          "type": "string",
+          "description": "The ID of the contact's parent folder."
+        },
+        "personalNotes": {
+          "type": "string",
+          "description": "The user's notes about the contact."
+        },
+        "profession": {
+          "type": "string",
+          "description": "The contact's profession."
+        },
+        "spouseName": {
+          "type": "string",
+          "description": "The name of the contact's spouse."
+        },
+        "surname": {
+          "type": "string",
+          "description": "The contact's surname."
+        },
+        "title": {
+          "type": "string",
+          "description": "The contact's title."
+        },
+        "yomiCompanyName": {
+          "type": "string",
+          "description": "The phonetic Japanese company name of the contact."
+        },
+        "yomiGivenName": {
+          "type": "string",
+          "description": "The phonetic Japanese given name (first name) of the contact."
+        },
+        "yomiSurname": {
+          "type": "string",
+          "description": "The phonetic Japanese surname (last name)  of the contact."
+        },
+        "photo": {
+          "$ref": "#/definitions/microsoft_graph_profilePhoto",
+          "description": "Optional contact picture. You can get or set a photo for a contact."
+        }
+      }
+    },
+    "microsoft_graph_contactFolder": {
+      "properties": {
+        "displayName": {
+          "type": "string",
+          "description": "The folder's display name."
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the contact folder. Read-only."
+        },
+        "parentFolderId": {
+          "type": "string",
+          "description": "The ID of the folder's parent folder."
+        }
+      }
+    },
+    "microsoft_graph_conversation": {
+      "properties": {
+        "hasAttachments": {
+          "type": "boolean",
+          "description": "Indicates whether any of the posts within this Conversation has at least one attachment."
+        },
+        "id": {
+          "type": "string",
+          "description": "The conversations's unique identifier. Read-only."
+        },
+        "lastDeliveredDateTime": {
+          "type": "datetimeoffset",
+          "description": "The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "preview": {
+          "type": "string",
+          "description": "A short summary from the body of the latest post in this converstaion."
+        },
+        "topic": {
+          "type": "string",
+          "description": "The topic of the conversation. This property can be set when the conversation is created, but it cannot be updated."
+        },
+        "uniqueSenders": {
+          "type": "collection",
+          "description": "All the users that sent a message to this Conversation."
+        }
+      }
+    },
+    "microsoft_graph_conversationThread": {
+      "properties": {
+        "ccRecipients": {
+          "type": "collection",
+          "description": "The Cc: recipients for the thread."
+        },
+        "hasAttachments": {
+          "type": "boolean",
+          "description": "Indicates whether any of the posts within this thread has at least one attachment."
+        },
+        "id": {
+          "type": "string",
+          "description": "Read-only."
+        },
+        "isLocked": {
+          "type": "boolean",
+          "description": "Indicates if the thread is locked."
+        },
+        "lastDeliveredDateTime": {
+          "type": "datetimeoffset",
+          "description": "The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "preview": {
+          "type": "string",
+          "description": "A short summary from the body of the latest post in this converstaion."
+        },
+        "toRecipients": {
+          "type": "collection",
+          "description": "The To: recipients for the thread."
+        },
+        "topic": {
+          "type": "string",
+          "description": "The topic of the conversation. This property can be set when the conversation is created, but it cannot be updated."
+        },
+        "uniqueSenders": {
+          "type": "collection",
+          "description": "All the users that sent a message to this thread."
+        }
+      }
+    },
+    "microsoft_graph_dateTimeTimeZone": {
+      "properties": {
+        "dateTime": {
+          "type": "string"
+        },
+        "timeZone": {
+          "type": "string"
+        }
+      }
+    },
+    "microsoft_graph_deleted": {
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "Represents the state of the deleted item."
+        }
+      }
+    },
+    "microsoft_graph_device": {
+      "properties": {
+        "accountEnabled": {
+          "type": "boolean",
+          "description": "true if the account is enabled; otherwise, false. Required."
+        },
+        "alternativeSecurityIds": {
+          "type": "collection",
+          "description": "The any operator is required for filter expressions on multi-valued properties. Not nullable. Required."
+        },
+        "approximateLastSignInDateTime": {
+          "type": "datetimeoffset",
+          "description": "The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "deviceId": {
+          "type": "string",
+          "description": "Unique client specified GUID to represent the device. Required."
+        },
+        "deviceMetadata": {
+          "type": "string"
+        },
+        "deviceVersion": {
+          "type": "int64"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The display name for the device. Required."
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the device. Inherited from directoryObject. Key, Not nullable. Read-only."
+        },
+        "isCompliant": {
+          "type": "boolean",
+          "description": "true if the device complies with Mobile Device Management (MDM) policies; otherwise, false."
+        },
+        "isManaged": {
+          "type": "boolean",
+          "description": "true if the device is managed by a Mobile Device Management (MDM) app such as Intune; otherwise, false."
+        },
+        "onPremisesLastSyncDateTime": {
+          "type": "datetimeoffset",
+          "description": "The last time at which the object was synced with the on-premises directory.The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "onPremisesSyncEnabled": {
+          "type": "boolean",
+          "description": "true if this object is synced from an on-premises directory; false if this object was originally synced from an on-premises directory but is no longer synced; null if this object has never been synced from an on-premises directory (default)."
+        },
+        "operatingSystem": {
+          "type": "string",
+          "description": "The type of operating system on the device. Required."
+        },
+        "operatingSystemVersion": {
+          "type": "string",
+          "description": "The version of the operating system on the device. Required."
+        },
+        "physicalIds": {
+          "type": "collection",
+          "description": "Not nullable."
+        },
+        "trustType": {
+          "type": "string"
+        }
+      }
+    },
+    "microsoft_graph_directoryObject": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "A Guid that is the unique identifier for the object; for example, 12345678-9abc-def0-1234-56789abcde. Key. Not nullable. Read-only."
+        }
+      }
+    },
+    "microsoft_graph_directoryRole": {
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "The description for the directory role. Read-only."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The display name for the directory role. Read-only."
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the directory role. Inherited from directoryObject. Key, Not nullable, Read-only."
+        },
+        "roleTemplateId": {
+          "type": "string",
+          "description": "The id of the directoryRoleTemplate that this role is based on. The property must be specified when activating a directory role in a tenant with a POST operation. After the directory role has been activated, the property is read only."
+        }
+      }
+    },
+    "microsoft_graph_directoryRoleTemplate": {
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "The description to set for the directory role. Read-only."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The display name to set for the directory role. Read-only."
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the template. Inherited from directoryObject. You specify the id of the directory role template for the roleTemplateId property in the POST request activate a directoryRole in a tenant. Key, Not nullable. Read-only."
+        }
+      }
+    },
+    "microsoft_graph_drive": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the drive. Read-only."
+        },
+        "driveType": {
+          "type": "string",
+          "description": "Describes the type of drive represented by this resource. OneDrive personal drives will return personal. OneDrive for Business will return business. SharePoint document libraries will return documentLibrary. Read-only."
+        },
+        "owner": {
+          "$ref": "#/definitions/microsoft_graph_identitySet",
+          "description": "Optional. The user account that owns the drive."
+        },
+        "quota": {
+          "$ref": "#/definitions/microsoft_graph_quota",
+          "description": "Optional. Information about the drive's storage space quota."
+        },
+        "root": {
+          "$ref": "#/definitions/microsoft_graph_driveItem",
+          "description": "The root folder of the drive. Read-only."
+        },
+        "items": {
+          "type": "collection",
+          "description": "All items contained in the drive. Read-only. Nullable."
+        },
+        "special": {
+          "type": "collection",
+          "description": "Collection of common folders available in OneDrive. Read-only. Nullable."
+        }
+      }
+    },
+    "microsoft_graph_driveItem": {
+      "properties": {
+        "audio": {
+          "$ref": "#/definitions/microsoft_graph_audio",
+          "description": "Audio metadata, if the item is an audio file. Read-only."
+        },
+        "cTag": {
+          "type": "string",
+          "description": "An eTag for the content of the item. This eTag is not changed if only the metadata is changed. Note This property is not returned if the item is a folder. Read-only."
+        },
+        "content": {
+          "type": "stream",
+          "description": "The content stream, if the item represents a file."
+        },
+        "createdBy": {
+          "$ref": "#/definitions/microsoft_graph_identitySet",
+          "description": "Identity of the user, device, and application which created the item. Read-only."
+        },
+        "createdDateTime": {
+          "type": "datetimeoffset",
+          "description": "Date and time of item creation. Read-only."
+        },
+        "deleted": {
+          "$ref": "#/definitions/microsoft_graph_deleted",
+          "description": "Information about the deleted state of the item. Read-only."
+        },
+        "eTag": {
+          "type": "string",
+          "description": "eTag for the entire item (metadata + content). Read-only."
+        },
+        "file": {
+          "$ref": "#/definitions/microsoft_graph_file",
+          "description": "File metadata, if the item is a file. Read-only."
+        },
+        "fileSystemInfo": {
+          "$ref": "#/definitions/microsoft_graph_fileSystemInfo",
+          "description": "File system information on client. Read-write."
+        },
+        "folder": {
+          "$ref": "#/definitions/microsoft_graph_folder",
+          "description": "Folder metadata, if the item is a folder. Read-only."
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the item within the Drive. Read-only."
+        },
+        "image": {
+          "$ref": "#/definitions/microsoft_graph_image",
+          "description": "Image metadata, if the item is an image. Read-only."
+        },
+        "lastModifiedBy": {
+          "$ref": "#/definitions/microsoft_graph_identitySet",
+          "description": "Identity of the user, device, and application which last modified the item. Read-only."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "Date and time the item was last modified. Read-only."
+        },
+        "location": {
+          "$ref": "#/definitions/microsoft_graph_geoCoordinates",
+          "description": "Location metadata, if the item has location data. Read-only."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the item (filename and extension). Read-write."
+        },
+        "package": {
+          "$ref": "#/definitions/microsoft_graph_package",
+          "description": "If present, indicates that this item is a package instead of a folder or file. Packages are treated like files in some contexts and folders in others. Read-only."
+        },
+        "parentReference": {
+          "$ref": "#/definitions/microsoft_graph_itemReference",
+          "description": "Parent information, if the item has a parent. Read-write."
+        },
+        "photo": {
+          "$ref": "#/definitions/microsoft_graph_photo",
+          "description": "Photo metadata, if the item is a photo. Read-only."
+        },
+        "remoteItem": {
+          "$ref": "#/definitions/microsoft_graph_remoteItem",
+          "description": "Remote item data, if the item is shared from a drive other than the one being accessed. Read-only."
+        },
+        "searchResult": {
+          "$ref": "#/definitions/microsoft_graph_searchResult",
+          "description": "Search metadata, if the item is from a search result. Read-only."
+        },
+        "shared": {
+          "$ref": "#/definitions/microsoft_graph_shared",
+          "description": "Indicates that the item has been shared with others and provides information about the shared state of the item. Read-only."
+        },
+        "size": {
+          "type": "int64",
+          "description": "Size of the item in bytes. Read-only."
+        },
+        "specialFolder": {
+          "$ref": "#/definitions/microsoft_graph_specialFolder",
+          "description": "If the current item is also available as a special folder, this facet is returned. Read-only."
+        },
+        "video": {
+          "$ref": "#/definitions/microsoft_graph_video",
+          "description": "Video metadata, if the item is a video. Read-only."
+        },
+        "webDavUrl": {
+          "type": "string"
+        },
+        "webUrl": {
+          "type": "string",
+          "description": "URL that displays the resource in the browser. Read-only."
+        },
+        "createdByUser": {
+          "$ref": "#/definitions/microsoft_graph_user",
+          "description": "Identity of the user, device, and application which created the item. Read-only."
+        },
+        "lastModifiedByUser": {
+          "$ref": "#/definitions/microsoft_graph_user",
+          "description": "Identity of the user, device, and application which last modified the item. Read-only."
+        },
+        "children": {
+          "type": "collection",
+          "description": "Collection containing Item objects for the immediate children of Item. Only items representing folders have children. Read-only. Nullable."
+        },
+        "thumbnails": {
+          "type": "collection",
+          "description": "Collection containing ThumbnailSet objects associated with the item. For more info, see getting thumbnails. Read-only. Nullable."
+        },
+        "permissions": {
+          "type": "collection",
+          "description": "The set of permissions for the item. Read-only. Nullable."
+        }
+      }
+    },
+    "microsoft_graph_emailAddress": {
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": "The email address of the person or entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The display name of the person or entity."
+        }
+      }
+    },
+    "microsoft_graph_entity": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Read-only."
+        }
+      }
+    },
+    "microsoft_graph_event": {
+      "properties": {
+        "attendees": {
+          "type": "collection",
+          "description": "The collection of attendees for the event."
+        },
+        "body": {
+          "$ref": "#/definitions/microsoft_graph_itemBody",
+          "description": "The body of the message associated with the event."
+        },
+        "bodyPreview": {
+          "type": "string",
+          "description": "The preview of the message associated with the event."
+        },
+        "categories": {
+          "type": "collection",
+          "description": "The categories associated with the event."
+        },
+        "changeKey": {
+          "type": "string",
+          "description": "Identifies the version of the event object. Every time the event is changed, ChangeKey changes as well. This allows Exchange to apply changes to the correct version of the object."
+        },
+        "createdDateTime": {
+          "type": "datetimeoffset",
+          "description": "The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "end": {
+          "$ref": "#/definitions/microsoft_graph_dateTimeTimeZone",
+          "description": "The date, time, and time zone that the event ends."
+        },
+        "hasAttachments": {
+          "type": "boolean",
+          "description": "Set to true if the event has attachments."
+        },
+        "iCalUId": {
+          "type": "string",
+          "description": "A unique identifier that is shared by all instances of an event across different calendars."
+        },
+        "id": {
+          "type": "string",
+          "description": "Read-only."
+        },
+        "importance": {
+          "type": "string",
+          "description": "The importance of the event: Low = 0, Normal = 1, High = 2. Possible values are: Low, Normal, High."
+        },
+        "isAllDay": {
+          "type": "boolean",
+          "description": "Set to true if the event lasts all day."
+        },
+        "isCancelled": {
+          "type": "boolean",
+          "description": "Set to true if the event has been canceled."
+        },
+        "isOrganizer": {
+          "type": "boolean",
+          "description": "Set to true if the message sender is also the organizer."
+        },
+        "isReminderOn": {
+          "type": "boolean",
+          "description": "Set to true if an alert is set to remind the user of the event."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "location": {
+          "$ref": "#/definitions/microsoft_graph_location",
+          "description": "The location of the event."
+        },
+        "onlineMeetingUrl": {
+          "type": "string",
+          "description": "A URL for an online meeting."
+        },
+        "organizer": {
+          "$ref": "#/definitions/microsoft_graph_recipient",
+          "description": "The organizer of the event."
+        },
+        "originalEndTimeZone": {
+          "type": "string",
+          "description": "The end time zone that was set when the event was created. A value of tzone://Microsoft/Customindicates that a legacy custom time zone was set in desktop Outlook."
+        },
+        "originalStart": {
+          "type": "datetimeoffset",
+          "description": "The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "originalStartTimeZone": {
+          "type": "string",
+          "description": "The start time zone that was set when the event was created. A value of tzone://Microsoft/Custom indicates that a legacy custom time zone was set in desktop Outlook."
+        },
+        "recurrence": {
+          "$ref": "#/definitions/microsoft_graph_patternedRecurrence",
+          "description": "The recurrence pattern for the event."
+        },
+        "reminderMinutesBeforeStart": {
+          "type": "int64",
+          "description": "The number of minutes before the event start time that the reminder alert occurs."
+        },
+        "responseRequested": {
+          "type": "boolean",
+          "description": "Set to true if the sender would like a response when the event is accepted or declined."
+        },
+        "responseStatus": {
+          "$ref": "#/definitions/microsoft_graph_responseStatus",
+          "description": "Indicates the type of response sent in response to an event message."
+        },
+        "sensitivity": {
+          "type": "string",
+          "description": "Possible values are: Normal, Personal, Private, Confidential."
+        },
+        "seriesMasterId": {
+          "type": "string",
+          "description": "The categories assigned to the item."
+        },
+        "showAs": {
+          "type": "string",
+          "description": "The status to show: Free = 0, Tentative = 1, Busy = 2, Oof = 3, WorkingElsewhere = 4, Unknown = -1. Possible values are: Free, Tentative, Busy, Oof, WorkingElsewhere, Unknown."
+        },
+        "start": {
+          "$ref": "#/definitions/microsoft_graph_dateTimeTimeZone",
+          "description": "The date, time, and time zone that the event starts."
+        },
+        "subject": {
+          "type": "string",
+          "description": "The text of the event's subject line."
+        },
+        "type": {
+          "type": "string",
+          "description": "The event type: SingleInstance = 0, Occurrence = 1, Exception = 2, SeriesMaster = 3. Possible values are: SingleInstance, Occurrence, Exception, SeriesMaster."
+        },
+        "webLink": {
+          "type": "string",
+          "description": "The URL to open the event in Outlook Web App.The event will open in the browser if you are logged in to your mailbox via Outlook Web App. You will be prompted to login if you are not already logged in with the browser.This URL can be accessed from within an iFrame."
+        },
+        "attachments": {
+          "type": "collection",
+          "description": "The collection of fileAttachment and itemAttachment attachments for the event. Navigation property. Read-only. Nullable."
+        },
+        "calendar": {
+          "$ref": "#/definitions/microsoft_graph_calendar",
+          "description": "The calendar that contains the event. Navigation property. Read-only."
+        },
+        "instances": {
+          "type": "collection",
+          "description": "The instances of the event. Navigation property. Read-only. Nullable."
+        }
+      }
+    },
+    "microsoft_graph_eventmessage": {
+      "properties": {
+        "bccRecipients": {
+          "type": "collection",
+          "description": "The Bcc: recipients for the message."
+        },
+        "body": {
+          "$ref": "#/definitions/microsoft_graph_itemBody",
+          "description": "The body of the message."
+        },
+        "bodyPreview": {
+          "type": "string",
+          "description": "The first 255 characters of the message body."
+        },
+        "categories": {
+          "type": "collection",
+          "description": "The categories associated with the message."
+        },
+        "ccRecipients": {
+          "type": "collection",
+          "description": "The Cc: recipients for the message."
+        },
+        "changeKey": {
+          "type": "string",
+          "description": "The version of the message."
+        },
+        "conversationId": {
+          "type": "string",
+          "description": "The ID of the conversation the email belongs to."
+        },
+        "createdDateTime": {
+          "type": "datetimeoffset",
+          "description": "The date and time the message was created."
+        },
+        "from": {
+          "$ref": "#/definitions/microsoft_graph_recipient",
+          "description": "The mailbox owner and sender of the message."
+        },
+        "hasAttachments": {
+          "type": "boolean",
+          "description": "Indicates whether the message has attachments."
+        },
+        "id": {
+          "type": "string"
+        },
+        "importance": {
+          "type": "string",
+          "description": "The importance of the message: Low, Normal, High."
+        },
+        "internetMessageId": {
+          "type": "string",
+          "description": "The message ID in the format specified by RFC2822."
+        },
+        "isDeliveryReceiptRequested": {
+          "type": "boolean",
+          "description": "Indicates whether a read receipt is requested for the message."
+        },
+        "isDraft": {
+          "type": "boolean",
+          "description": "Indicates whether the message is a draft. A message is a draft if it hasn't been sent yet."
+        },
+        "isRead": {
+          "type": "boolean",
+          "description": "Indicates whether the message has been read."
+        },
+        "isReadReceiptRequested": {
+          "type": "boolean",
+          "description": "Indicates whether a read receipt is requested for the message."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "The date and time the message was last changed."
+        },
+        "meetingMessageType": {
+          "type": "string",
+          "description": "The type of event message: None, MeetingRequest, MeetingCancelled, MeetingAccepted, MeetingTenativelyAccepted, MeetingDeclined."
+        },
+        "parentFolderId": {
+          "type": "string",
+          "description": "The unique identifier for the message's parent mailFolder."
+        },
+        "receivedDateTime": {
+          "type": "datetimeoffset",
+          "description": "The date and time the message was received."
+        },
+        "replyTo": {
+          "type": "collection",
+          "description": "The email addresses to use when replying."
+        },
+        "sender": {
+          "$ref": "#/definitions/microsoft_graph_recipient",
+          "description": "The account that is actually used to generate the message."
+        },
+        "sentDateTime": {
+          "type": "datetimeoffset",
+          "description": "The date and time the message was sent."
+        },
+        "subject": {
+          "type": "string",
+          "description": "The subject of the message."
+        },
+        "toRecipients": {
+          "type": "collection",
+          "description": "The To: recipients for the message."
+        },
+        "uniqueBody": {
+          "$ref": "#/definitions/microsoft_graph_itemBody",
+          "description": "The part of the body of the message that is unique to the current message."
+        },
+        "webLink": {
+          "type": "string",
+          "description": "The URL to open the message in Outlook Web App.You can append an ispopout argument to the end of the URL to change how the message is displayed. If ispopout is not present or if it is set to 1, then the message is shown in a popout window. If ispopout is set to 0, then the browser will show the message in the Outlook Web App review pane.The message will open in the browser if you are logged in to your mailbox via Outlook Web App. You will be prompted to login if you are not already logged in with the browser.This URL can be accessed from within an iFrame."
+        }
+      }
+    },
+    "microsoft_graph_extension": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Read-only."
+        }
+      }
+    },
+    "microsoft_graph_file": {
+      "properties": {
+        "hashes": {
+          "$ref": "#/definitions/microsoft_graph_hashes",
+          "description": "Hashes of the file's binary content, if available. Read-only."
+        },
+        "mimeType": {
+          "type": "string",
+          "description": "The MIME type for the file. This is determined by logic on the server and might not be the value provided when the file was uploaded. Read-only."
+        }
+      }
+    },
+    "microsoft_graph_fileAttachment": {
+      "properties": {
+        "contentBytes": {
+          "type": "string",
+          "description": "The binary contents of the file."
+        },
+        "contentId": {
+          "type": "string",
+          "description": "The ID of the attachment in the Exchange store."
+        },
+        "contentLocation": {
+          "type": "string",
+          "description": "The Uniform Resource Identifier (URI) that corresponds to the location of the content of the attachment."
+        },
+        "contentType": {
+          "type": "string",
+          "description": "The content type of the attachment."
+        },
+        "id": {
+          "type": "string",
+          "description": "The attachment ID."
+        },
+        "isInline": {
+          "type": "boolean",
+          "description": "Set to true if this is an inline attachment."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "The date and time when the attachment was last modified."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name representing the text that is displayed below the icon representing the embedded attachment.This does not need to be the actual file name."
+        },
+        "size": {
+          "type": "int64",
+          "description": "The size in bytes of the attachment."
+        }
+      }
+    },
+    "microsoft_graph_fileSystemInfo": {
+      "properties": {
+        "createdDateTime": {
+          "type": "datetimeoffset",
+          "description": "The UTC date and time the file was created on a client."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "The UTC date and time the file was last modified on a client."
+        }
+      }
+    },
+    "microsoft_graph_filterCriteria": {
+      "properties": {
+        "color": {
+          "type": "string"
+        },
+        "criterion1": {
+          "type": "string"
+        },
+        "criterion2": {
+          "type": "string"
+        },
+        "dynamicCriteria": {
+          "type": "string"
+        },
+        "filterOn": {
+          "type": "string"
+        },
+        "values": {
+          "type": "string"
+        }
+      }
+    },
+    "microsoft_graph_filterDateTime": {
+      "properties": {
+        "date": {
+          "type": "string",
+          "description": "The date in ISO8601 format used to filter data."
+        },
+        "specificity": {
+          "type": "string",
+          "description": "How specific the date should be used to keep data. For example, if the date is 2005-04-02 and the specifity is set to \"month\", the filter operation will keep all rows with a date in the month of april 2009. Possible values are: Year, Monday, Day, Hour, Minute, Second."
+        }
+      }
+    },
+    "microsoft_graph_folder": {
+      "properties": {
+        "childCount": {
+          "type": "int64",
+          "description": "Number of children contained immediately within this container."
+        }
+      }
+    },
+    "microsoft_graph_formatProtection": {
+      "properties": {
+        "formulaHidden": {
+          "type": "boolean",
+          "description": "Indicates if Excel hides the formula for the cells in the range. A null value indicates that the entire range doesn't have uniform formula hidden setting."
+        },
+        "locked": {
+          "type": "boolean",
+          "description": "Indicates if Excel locks the cells in the object. A null value indicates that the entire range doesn't have uniform lock setting."
+        }
+      }
+    },
+    "microsoft_graph_geoCoordinates": {
+      "properties": {
+        "altitude": {
+          "type": "float",
+          "description": "Optional. The altitude (height), in feet,  above sea level for the item. Read-only."
+        },
+        "latitude": {
+          "type": "float",
+          "description": "Optional. The latitude, in decimal, for the item. Read-only."
+        },
+        "longitude": {
+          "type": "float",
+          "description": "Optional. The longitude, in decimal, for the item. Read-only."
+        }
+      }
+    },
+    "microsoft_graph_group": {
+      "properties": {
+        "allowExternalSenders": {
+          "type": "boolean",
+          "description": "Default is false. Indicates if people external to the organization can send messages to the group."
+        },
+        "autoSubscribeNewMembers": {
+          "type": "boolean",
+          "description": "Default is false. Indicates if new members added to the group will be auto-subscribed to receive email notifications. You can set this property in a PATCH request for the group; do not set it in the initial POST request that creates the group."
+        },
+        "description": {
+          "type": "string",
+          "description": "An optional description for the group."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The display name for the group. This property is required when a group is created and it cannot be cleared during updates. Supports $filter and $orderby."
+        },
+        "groupTypes": {
+          "type": "collection",
+          "description": "Specifies the type of group to create. Possible values are Unified to create an Office 365 group, or DynamicMembership for dynamic groups.  For all other group types, like security-enabled groups and email-enabled security groups, do not set this property. Supports $filter."
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the group. Inherited from directoryObject. Key. Not nullable. Read-only."
+        },
+        "isSubscribedByMail": {
+          "type": "boolean",
+          "description": "Default value is true. Indicates whether the current user is subscribed to receive email conversations."
+        },
+        "mail": {
+          "type": "string",
+          "description": "The SMTP address for the group, for example, \"serviceadmins@contoso.onmicrosoft.com\". Read-only. Supports $filter."
+        },
+        "mailEnabled": {
+          "type": "boolean",
+          "description": "Specifies whether the group is mail-enabled. If the securityEnabled property is also true, the group is a mail-enabled security group; otherwise, the group is a Microsoft Exchange distribution group."
+        },
+        "mailNickname": {
+          "type": "string",
+          "description": "The mail alias for the group. This property must be specified when a group is created. Supports $filter."
+        },
+        "onPremisesLastSyncDateTime": {
+          "type": "datetimeoffset",
+          "description": "Indicates the last time at which the group was synced with the on-premises directory.The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'. Read-only. Supports $filter."
+        },
+        "onPremisesSecurityIdentifier": {
+          "type": "string",
+          "description": "Contains the on-premises security identifier (SID) for the group that was synchronized from on-premises to the cloud. Read-only."
+        },
+        "onPremisesSyncEnabled": {
+          "type": "boolean",
+          "description": "true if this group is synced from an on-premises directory; false if this group was originally synced from an on-premises directory but is no longer synced; null if this object has never been synced from an on-premises directory (default). Read-only. Supports $filter."
+        },
+        "proxyAddresses": {
+          "type": "collection",
+          "description": "The any operator is required for filter expressions on multi-valued properties. Read-only. Not nullable. Supports $filter."
+        },
+        "securityEnabled": {
+          "type": "boolean",
+          "description": "Specifies whether the group is a security group. If the mailEnabled property is also true, the group is a mail-enabled security group; otherwise it is a security group. Must be false for Office 365 groups. Supports $filter."
+        },
+        "unseenCount": {
+          "type": "int64",
+          "description": "Count of posts that the current  user has not seen since his last visit."
+        },
+        "visibility": {
+          "type": "string",
+          "description": "Specifies the visibility of an Office 365 group. Possible values are: Private, Public, or empty (which is interpreted as Public)."
+        },
+        "acceptedSenders": {
+          "type": "collection",
+          "description": "The list of users or groups that are allowed to create post's or calendar events in this group. If this list is non-empty then only users or groups listed here are allowed to post."
+        },
+        "calendar": {
+          "$ref": "#/definitions/microsoft_graph_calendar",
+          "description": "The group's calendar. Read-only."
+        },
+        "calendarView": {
+          "type": "collection",
+          "description": "The calendar view for the calendar. Read-only."
+        },
+        "conversations": {
+          "type": "collection",
+          "description": "The group's conversations."
+        },
+        "createdOnBehalfOf": {
+          "$ref": "#/definitions/microsoft_graph_directoryObject",
+          "description": "The user (or application) that created the group. NOTE: This is not set if the user is an administrator. Read-only."
+        },
+        "drive": {
+          "$ref": "#/definitions/microsoft_graph_drive",
+          "description": "The group's drive. Read-only."
+        },
+        "events": {
+          "type": "collection",
+          "description": "The group's calendar events."
+        },
+        "memberOf": {
+          "type": "collection",
+          "description": "Groups that this group is a member of. HTTP Methods: GET (supported for all groups). Read-only. Nullable."
+        },
+        "members": {
+          "type": "collection",
+          "description": "Users and groups that are members of this group. HTTP Methods: GET (supported for all groups), POST (supported for Office 365 groups, security groups and mail-enabled security groups), DELETE (supported for Office 365 groups and security groups) Nullable."
+        },
+        "owners": {
+          "type": "collection",
+          "description": "The owners of the group. The owners are a set of non-admin users who are allowed to modify this object. Limited to 10 owners. HTTP Methods: GET (supported for all groups), POST (supported for Office 365 groups, security groups and mail-enabled security groups), DELETE (supported for Office 365 groups and security groups). Nullable."
+        },
+        "photo": {
+          "$ref": "#/definitions/microsoft_graph_profilePhoto",
+          "description": "The group's profile photo"
+        },
+        "rejectedSenders": {
+          "type": "collection",
+          "description": "The list of users or groups that are not allowed to create posts or calendar events in this group. Nullable"
+        },
+        "threads": {
+          "type": "collection",
+          "description": "The group's conversation threads. Nullable."
+        }
+      }
+    },
+    "microsoft_graph_hashes": {
+      "properties": {
+        "crc32Hash": {
+          "type": "string",
+          "description": "The CRC32 value of the file (if available). Read-only."
+        },
+        "sha1Hash": {
+          "type": "string",
+          "description": "SHA1 hash for the contents of the file (if available). Read-only."
+        },
+        "quickXorHash": {
+          "type": "string",
+          "description": "A proprietary hash of the file that can be used to determine if the contents of the file have changed (if available). Read-only."
+        }
+      }
+    },
+    "microsoft_graph_icon": {
+      "properties": {
+        "index": {
+          "type": "int64",
+          "description": "Represents the index of the icon in the given set."
+        },
+        "set": {
+          "type": "string",
+          "description": "Represents the set that the icon is part of. Possible values are: Invalid, ThreeArrows, ThreeArrowsGray, ThreeFlags, ThreeTrafficLights1, ThreeTrafficLights2, ThreeSigns, ThreeSymbols, ThreeSymbols2, FourArrows, FourArrowsGray, FourRedToBlack, FourRating, FourTrafficLights, FiveArrows, FiveArrowsGray, FiveRating, FiveQuarters, ThreeStars, ThreeTriangles, FiveBoxes."
+        }
+      }
+    },
+    "microsoft_graph_identity": {
+      "properties": {
+        "displayName": {
+          "type": "string",
+          "description": "The identity's display name. Note that this may not always be available or up to date. For example, if a user changes their display name, the API may show the new value in a future response, but the items associated with the user won't show up as having changed when using find changes"
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the identity."
+        }
+      }
+    },
+    "microsoft_graph_identitySet": {
+      "properties": {
+        "application": {
+          "$ref": "#/definitions/microsoft_graph_identity",
+          "description": "Optional. The application associated with this action."
+        },
+        "device": {
+          "$ref": "#/definitions/microsoft_graph_identity",
+          "description": "Optional. The device associated with this action."
+        },
+        "user": {
+          "$ref": "#/definitions/microsoft_graph_identity",
+          "description": "Optional. The user associated with this action."
+        }
+      }
+    },
+    "microsoft_graph_image": {
+      "properties": {
+        "height": {
+          "type": "int64",
+          "description": "Optional. Height of the image, in pixels. Read-only."
+        },
+        "width": {
+          "type": "int64",
+          "description": "Optional. Width of the image, in pixels. Read-only."
+        }
+      }
+    },
+    "microsoft_graph_inferenceClassification": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Read-only."
+        }
+      }
+    },
+    "microsoft_graph_inferenceClassificationOverride": {
+      "properties": {
+        "classifyAs": {
+          "type": "string",
+          "description": "Specifies how incoming messages from a specific sender should always be classified as. Possible values are: focused, other."
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the override. Read-only."
+        },
+        "senderEmailAddress": {
+          "$ref": "#/definitions/microsoft_graph_emailAddress",
+          "description": "The email address information of the sender for whom the override is created."
+        }
+      }
+    },
+    "microsoft_graph_itemAttachment": {
+      "properties": {
+        "contentType": {
+          "type": "string",
+          "description": "The content type of the attachment."
+        },
+        "id": {
+          "type": "string",
+          "description": "The attachment ID."
+        },
+        "isInline": {
+          "type": "boolean",
+          "description": "Set to true if the attachment is inline, such as an embedded image within the body of the item."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "The last time and date that the attachment was modified."
+        },
+        "name": {
+          "type": "string",
+          "description": "The display name of the attachment."
+        },
+        "size": {
+          "type": "int64",
+          "description": "The size in bytes of the attachment."
+        }
+      }
+    },
+    "microsoft_graph_itemBody": {
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "The content of the item."
+        },
+        "contentType": {
+          "type": "string",
+          "description": "The type of the content. Possible values are Text and HTML."
+        }
+      }
+    },
+    "microsoft_graph_itemReference": {
+      "properties": {
+        "driveId": {
+          "type": "string",
+          "description": "Unique identifier of the OneDrive instance that contains the item. Read-only."
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the item in the drive. Read-only."
+        },
+        "path": {
+          "type": "string",
+          "description": "Path that can be used to navigate to the item. Read-only."
+        }
+      }
+    },
+    "microsoft_graph_licenseUnitsDetail": {
+      "properties": {
+        "enabled": {
+          "type": "int64"
+        },
+        "suspended": {
+          "type": "int64"
+        },
+        "warning": {
+          "type": "int64"
+        }
+      }
+    },
+    "microsoft_graph_localeInfo": {
+      "properties": {
+        "locale": {
+          "type": "string",
+          "description": "A locale representation for the user, which includes the user's preferred language and country/region. For example, \"en-us\". The language component follows 2-letter codes as defined in ISO 639-1, and the country component follows 2-letter codes as defined in ISO 3166-1 alpha-2."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "A name representing the user's locale in natural language, for example, \"English (United States)\"."
+        }
+      }
+    },
+    "microsoft_graph_location": {
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/microsoft_graph_physicalAddress",
+          "description": "The street address of the location."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The name associated with the location."
+        },
+        "locationEmailAddress": {
+          "type": "string",
+          "description": "Optional email address of the location."
+        }
+      }
+    },
+    "microsoft_graph_locationconstraint": {
+      "properties": {
+        "isRequired": {
+          "type": "boolean",
+          "description": "The client requests the service to include in the response a meeting location for the meeting. If this is true and all the resources are busy, findMeetingTimes will not return any meeting time suggestions. If this is false and all the resources are busy, findMeetingTimes would still look for meeting times without locations."
+        },
+        "locations": {
+          "type": "collection",
+          "description": "Constraint information for one or more locations that the client requests for the meeting."
+        },
+        "suggestLocation": {
+          "type": "boolean",
+          "description": "The client requests the service to suggest one or more meeting locations."
+        }
+      }
+    },
+    "microsoft_graph_locationConstraintItem": {
+      "properties": {
+        "resolveAvailability": {
+          "type": "boolean",
+          "description": "If set to true and the specified resource is busy, findMeetingTimes looks for another resource that is free. If set to false and the specified resource is busy, findMeetingTimes returns the resource best ranked in the user's cache without checking if it's free. Default is true."
+        },
+        "address": {
+          "$ref": "#/definitions/microsoft_graph_physicalAddress",
+          "description": "The street address of the location."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The name associated with the location."
+        },
+        "locationEmailAddress": {
+          "type": "string",
+          "description": "Optional email address of the location."
+        }
+      }
+    },
+    "microsoft_graph_mailboxSettings": {
+      "properties": {
+        "automaticRepliesSetting": {
+          "$ref": "#/definitions/microsoft_graph_automaticRepliesSetting",
+          "description": "Configuration settings to automatically notify the sender of an incoming email with a message from the signed-in user."
+        },
+        "language": {
+          "$ref": "#/definitions/microsoft_graph_localeInfo",
+          "description": "The locale information for the user, including the preferred language and country/region."
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "The default time zone for the user's mailbox."
+        }
+      }
+    },
+    "microsoft_graph_mailFolder": {
+      "properties": {
+        "childFolderCount": {
+          "type": "int64",
+          "description": "The number of immediate child mailFolders in the current mailFolder."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The mailFolder's display name."
+        },
+        "id": {
+          "type": "string",
+          "description": "The mailFolder's unique identifier. You can use the following well-known names to access the corresponding folder: Inbox, Drafts, SentItems, DeletedItems."
+        },
+        "parentFolderId": {
+          "type": "string",
+          "description": "The unique identifier for the mailFolder's parent mailFolder."
+        },
+        "totalItemCount": {
+          "type": "int64",
+          "description": "The number of items in the mailFolder."
+        },
+        "unreadItemCount": {
+          "type": "int64",
+          "description": "The number of items in the mailFolder marked as unread."
+        }
+      }
+    },
+    "microsoft_graph_meetingTimeSuggestion": {
+      "properties": {
+        "attendeeAvailability": {
+          "type": "collection",
+          "description": "An array that shows the availability status of each attendee for this meeting suggestion."
+        },
+        "confidence": {
+          "type": "int64",
+          "description": "A percentage that represents the likelhood of all the attendees attending."
+        },
+        "locations": {
+          "type": "collection",
+          "description": "An array that specifies the name and geographic location of each meeting location for this meeting suggestion."
+        },
+        "meetingTimeSlot": {
+          "$ref": "#/definitions/microsoft_graph_timeSlot",
+          "description": "A time period suggested for the meeting."
+        },
+        "organizerAvailability": {
+          "type": "string",
+          "description": "Availability of the meeting organizer for this meeting suggestion. Possible values are: free, tentative, busy, oof, workingElsewhere, unknown."
+        },
+        "suggestionReason": {
+          "type": "string",
+          "description": "Reason for suggesting the meeting time."
+        }
+      }
+    },
+    "microsoft_graph_meetingTimeSuggestionsResult": {
+      "properties": {
+        "emptySuggestionsReason": {
+          "type": "string",
+          "description": "A reason for not returning any meeting suggestions. Possible values are: attendeesUnavailable, attendeesUnavailableOrUnknown, locationsUnavailable, organizerUnavailable, or unknown."
+        },
+        "meetingTimeSuggestions": {
+          "type": "collection",
+          "description": "An array of meeting suggestions."
+        }
+      }
+    },
+    "microsoft_graph_message": {
+      "properties": {
+        "bccRecipients": {
+          "type": "collection",
+          "description": "The Bcc: recipients for the message."
+        },
+        "body": {
+          "$ref": "#/definitions/microsoft_graph_itemBody",
+          "description": "The body of the message."
+        },
+        "bodyPreview": {
+          "type": "string",
+          "description": "The first 255 characters of the message body."
+        },
+        "categories": {
+          "type": "collection",
+          "description": "The categories associated with the message."
+        },
+        "ccRecipients": {
+          "type": "collection",
+          "description": "The Cc: recipients for the message."
+        },
+        "changeKey": {
+          "type": "string",
+          "description": "The version of the message."
+        },
+        "conversationId": {
+          "type": "string",
+          "description": "The ID of the conversation the email belongs to."
+        },
+        "createdDateTime": {
+          "type": "datetimeoffset",
+          "description": "The date and time the message was created."
+        },
+        "from": {
+          "$ref": "#/definitions/microsoft_graph_recipient",
+          "description": "The mailbox owner and sender of the message."
+        },
+        "hasAttachments": {
+          "type": "boolean",
+          "description": "Indicates whether the message has attachments."
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the message (note that this value may change if a message is moved or altered)"
+        },
+        "importance": {
+          "type": "string",
+          "description": "The importance of the message: Low, Normal, High."
+        },
+        "inferenceClassification": {
+          "type": "string",
+          "description": "The classification of the message for the user, based on inferred relevance or importance, or on an explicit override. Possible values are: focused or other."
+        },
+        "internetMessageId": {
+          "type": "string",
+          "description": "The message ID in the format specified by RFC2822."
+        },
+        "isDeliveryReceiptRequested": {
+          "type": "boolean",
+          "description": "Indicates whether a read receipt is requested for the message."
+        },
+        "isDraft": {
+          "type": "boolean",
+          "description": "Indicates whether the message is a draft. A message is a draft if it hasn't been sent yet."
+        },
+        "isRead": {
+          "type": "boolean",
+          "description": "Indicates whether the message has been read."
+        },
+        "isReadReceiptRequested": {
+          "type": "boolean",
+          "description": "Indicates whether a read receipt is requested for the message."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "The date and time the message was last changed."
+        },
+        "parentFolderId": {
+          "type": "string",
+          "description": "The unique identifier for the message's parent mailFolder."
+        },
+        "receivedDateTime": {
+          "type": "datetimeoffset",
+          "description": "The date and time the message was received."
+        },
+        "replyTo": {
+          "type": "collection",
+          "description": "The email addresses to use when replying."
+        },
+        "sender": {
+          "$ref": "#/definitions/microsoft_graph_recipient",
+          "description": "The account that is actually used to generate the message."
+        },
+        "sentDateTime": {
+          "type": "datetimeoffset",
+          "description": "The date and time the message was sent."
+        },
+        "subject": {
+          "type": "string",
+          "description": "The subject of the message."
+        },
+        "toRecipients": {
+          "type": "collection",
+          "description": "The To: recipients for the message."
+        },
+        "uniqueBody": {
+          "$ref": "#/definitions/microsoft_graph_itemBody",
+          "description": "The part of the body of the message that is unique to the current message. uniqueBody is not provided by default but can be retrieved for a given message by use of the ?$select=uniqueBody query."
+        },
+        "webLink": {
+          "type": "string",
+          "description": "The URL to open the message in Outlook Web App.You can append an ispopout argument to the end of the URL to change how the message is displayed. If ispopout is not present or if it is set to 1, then the message is shown in a popout window. If ispopout is set to 0, then the browser will show the message in the Outlook Web App review pane.The message will open in the browser if you are logged in to your mailbox via Outlook Web App. You will be prompted to login if you are not already logged in with the browser.This URL can be accessed from within an iFrame."
+        }
+      }
+    },
+    "microsoft_graph_multivaluelegacyextendedproperty": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The property identifier. Read-only."
+        },
+        "value": {
+          "type": "collection",
+          "description": "A collection of property values."
+        }
+      }
+    },
+    "microsoft_graph_namedItem": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the object. Read-only."
+        },
+        "type": {
+          "type": "string",
+          "description": "Indicates what type of reference is associated with the name. Possible values are: String, Integer, Double, Boolean, Range. Read-only."
+        },
+        "value": {
+          "$ref": "#/definitions/microsoft_graph_range",
+          "description": "Represents the formula that the name is defined to refer to. E.g. =Sheet14!$B$2:$H$12, =4.75, etc. Read-only."
+        },
+        "visible": {
+          "type": "boolean",
+          "description": "Specifies whether the object is visible or not."
+        }
+      }
+    },
+    "microsoft_graph_opentypeextension": {
+      "properties": {
+        "extensionName": {
+          "type": "string",
+          "description": "A unique text identifier for an open type data extension. Required."
+        },
+        "id": {
+          "type": "string",
+          "description": "A fully qualified identifier that concatenates the extension type with the extensionName. Read-only."
+        }
+      }
+    },
+    "microsoft_graph_organization": {
+      "properties": {
+        "assignedPlans": {
+          "type": "collection",
+          "description": "The collection of service plans associated with the tenant. Not nullable."
+        },
+        "businessPhones": {
+          "type": "collection"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "countryLetterCode": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The display name for the tenant."
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the tenant. Inherited from directoryObject. Key. Not nullable. Read-only."
+        },
+        "marketingNotificationEmails": {
+          "type": "collection",
+          "description": "Not nullable."
+        },
+        "onPremisesLastSyncDateTime": {
+          "type": "datetimeoffset"
+        },
+        "onPremisesSyncEnabled": {
+          "type": "boolean"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "preferredLanguage": {
+          "type": "string"
+        },
+        "provisionedPlans": {
+          "type": "collection",
+          "description": "Not nullable."
+        },
+        "securityComplianceNotificationMails": {
+          "type": "collection"
+        },
+        "securityComplianceNotificationPhones": {
+          "type": "collection"
+        },
+        "state": {
+          "type": "string"
+        },
+        "street": {
+          "type": "string"
+        },
+        "technicalNotificationMails": {
+          "type": "collection",
+          "description": "Not nullable."
+        },
+        "verifiedDomains": {
+          "type": "collection",
+          "description": "The collection of domains associated with this tenant. Not nullable."
+        }
+      }
+    },
+    "microsoft_graph_outlookitem": {
+      "properties": {
+        "categories": {
+          "type": "collection"
+        },
+        "changeKey": {
+          "type": "string"
+        },
+        "createdDateTime": {
+          "type": "datetimeoffset",
+          "description": "The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "id": {
+          "type": "string",
+          "description": "Read-only."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        }
+      }
+    },
+    "microsoft_graph_package": {
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "microsoft_graph_passwordprofile": {
+      "properties": {
+        "forceChangePasswordNextSignIn": {
+          "type": "boolean",
+          "description": "true if the user must change her password on the next login; otherwise false."
+        },
+        "password": {
+          "type": "string",
+          "description": "The password for the user. This property is required when a user is created. It can be updated, but the user will be required to change the password on the next login. The password must satisfy minimum requirements as specified by the user’s passwordPolicies property. By default, a strong password is required."
+        }
+      }
+    },
+    "microsoft_graph_patternedrecurrence": {
+      "properties": {
+        "pattern": {
+          "$ref": "#/definitions/microsoft_graph_recurrencePattern",
+          "description": "The frequency of an event."
+        },
+        "range": {
+          "$ref": "#/definitions/microsoft_graph_recurrenceRange",
+          "description": "The duration of an event."
+        }
+      }
+    },
+    "microsoft_graph_permission": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the permission among all permissions on the item. Read-only."
+        },
+        "grantedTo": {
+          "$ref": "#/definitions/microsoft_graph_identitySet",
+          "description": "For user type permissions, the details of the users & applications for this permission. Read-only."
+        },
+        "inheritedFrom": {
+          "$ref": "#/definitions/microsoft_graph_itemReference",
+          "description": "Provides a reference to the ancestor of the current permission, if it is inherited from an ancestor. Read-only."
+        },
+        "invitation": {
+          "$ref": "#/definitions/microsoft_graph_sharingInvitation",
+          "description": "Details of any associated sharing invitation for this permission. Read-only."
+        },
+        "link": {
+          "$ref": "#/definitions/microsoft_graph_sharingLink",
+          "description": "Provides the link details of the current permission, if it is a link type permissions. Read-only."
+        },
+        "roles": {
+          "type": "collection"
+        },
+        "shareId": {
+          "type": "string",
+          "description": "A unique token for this permission. Read-only."
+        }
+      }
+    },
+    "microsoft_graph_photo": {
+      "properties": {
+        "cameraMake": {
+          "type": "string",
+          "description": "Camera manufacturer. Read-only."
+        },
+        "cameraModel": {
+          "type": "string",
+          "description": "Camera model. Read-only."
+        },
+        "exposureDenominator": {
+          "type": "int64",
+          "description": "The denominator for the exposure time fraction from the camera. Read-only."
+        },
+        "exposureNumerator": {
+          "type": "int64",
+          "description": "The numerator for the exposure time fraction from the camera. Read-only."
+        },
+        "fNumber": {
+          "type": "int64",
+          "description": "The F-stop value from the camera. Read-only."
+        },
+        "focalLength": {
+          "type": "int64",
+          "description": "The focal length from the camera. Read-only."
+        },
+        "iso": {
+          "type": "int64",
+          "description": "The ISO value from the camera. Read-only."
+        },
+        "takenDateTime": {
+          "type": "datetimeoffset",
+          "description": "Represents the date and time the photo was taken. Read-only."
+        }
+      }
+    },
+    "microsoft_graph_physicalAddress": {
+      "properties": {
+        "city": {
+          "type": "string",
+          "description": "The city."
+        },
+        "countryOrRegion": {
+          "type": "string",
+          "description": "The country or region. It's a free-format string value, for example, \"United States\"."
+        },
+        "postalCode": {
+          "type": "string",
+          "description": "The postal code."
+        },
+        "state": {
+          "type": "string",
+          "description": "The state."
+        },
+        "street": {
+          "type": "string",
+          "description": "The street."
+        }
+      }
+    },
+    "microsoft_graph_post": {
+      "properties": {
+        "body": {
+          "$ref": "#/definitions/microsoft_graph_itemBody",
+          "description": "The contents of the post. This is a default property. This property can be null."
+        },
+        "categories": {
+          "type": "collection",
+          "description": "The categories associated with the post."
+        },
+        "changeKey": {
+          "type": "string",
+          "description": "Identifies the version of the post. Every time the post is changed, ChangeKey changes as well. This allows Exchange to apply changes to the correct version of the object."
+        },
+        "conversationId": {
+          "type": "string",
+          "description": "Unique ID of the conversation. Read-only."
+        },
+        "conversationThreadId": {
+          "type": "string",
+          "description": "Unique ID of the conversation thread. Read-only."
+        },
+        "createdDateTime": {
+          "type": "datetimeoffset",
+          "description": "Specifies when the post was created. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "from": {
+          "$ref": "#/definitions/microsoft_graph_recipient",
+          "description": "Used in delegate access scenarios. Indicates who posted the message on behalf of another user. This is a default property."
+        },
+        "hasAttachments": {
+          "type": "boolean",
+          "description": "Indicates whether the post has at least one attachment. This is a default property."
+        },
+        "id": {
+          "type": "string",
+          "description": "Read-only."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "Specifies when the post was last modified. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "newParticipants": {
+          "type": "collection",
+          "description": "Conversation participants that were added to the thread as part of this post."
+        },
+        "receivedDateTime": {
+          "type": "datetimeoffset",
+          "description": "Specifies when the post was received. The DateTimeOffset type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "sender": {
+          "$ref": "#/definitions/microsoft_graph_recipient",
+          "description": "Contains the address of the sender. The value of Sender is assumed to be the address of the authenticated user in the case when Sender is not specified. This is a default property."
+        }
+      }
+    },
+    "microsoft_graph_profilePhoto": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Read-only."
+        },
+        "height": {
+          "type": "int64",
+          "description": "The height of the photo. Read-only."
+        },
+        "width": {
+          "type": "int64",
+          "description": "The width of the photo. Read-only."
+        }
+      }
+    },
+    "microsoft_graph_provisionedplan": {
+      "properties": {
+        "capabilityStatus": {
+          "type": "string",
+          "description": "For example, “Enabled”."
+        },
+        "provisioningStatus": {
+          "type": "string",
+          "description": "For example, “Success”."
+        },
+        "service": {
+          "type": "string",
+          "description": "The name of the service; for example, “AccessControlS2S”"
+        }
+      }
+    },
+    "microsoft_graph_quota": {
+      "properties": {
+        "deleted": {
+          "type": "int64",
+          "description": "Total space consumed by files in the recycle bin, in bytes. Read-only."
+        },
+        "remaining": {
+          "type": "int64",
+          "description": "Total space remaining before reaching the quota limit, in bytes. Read-only."
+        },
+        "state": {
+          "type": "string",
+          "description": "Enumeration value that indicates the state of the storage space. Read-only."
+        },
+        "total": {
+          "type": "int64",
+          "description": "Total allowed storage space, in bytes. Read-only."
+        },
+        "used": {
+          "type": "int64",
+          "description": "Total space used, in bytes. Read-only."
+        }
+      }
+    },
+    "microsoft_graph_range": {
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": "Represents the range reference in A1-style. Address value will contain the Sheet reference (e.g. Sheet1!A1:B4). Read-only."
+        },
+        "addressLocal": {
+          "type": "string",
+          "description": "Represents range reference for the specified range in the language of the user. Read-only."
+        },
+        "cellCount": {
+          "type": "int64",
+          "description": "Number of cells in the range. Read-only."
+        },
+        "columnCount": {
+          "type": "int64",
+          "description": "Represents the total number of columns in the range. Read-only."
+        },
+        "columnHidden": {
+          "type": "boolean",
+          "description": "Represents if all columns of the current range are hidden."
+        },
+        "columnIndex": {
+          "type": "int64",
+          "description": "Represents the column number of the first cell in the range. Zero-indexed. Read-only."
+        },
+        "formulas": {
+          "type": "string",
+          "description": "Represents the formula in A1-style notation."
+        },
+        "formulasLocal": {
+          "type": "string",
+          "description": "Represents the formula in A1-style notation, in the user's language and number-formatting locale.  For example, the English \"=SUM(A1, 1.5)\" formula would become \"=SUMME(A1; 1,5)\" in German."
+        },
+        "formulasR1C1": {
+          "type": "string",
+          "description": "Represents the formula in R1C1-style notation."
+        },
+        "hidden": {
+          "type": "boolean",
+          "description": "Represents if all cells of the current range are hidden. Read-only."
+        },
+        "numberFormat": {
+          "type": "string",
+          "description": "Represents Excel's number format code for the given cell."
+        },
+        "rowCount": {
+          "type": "int64",
+          "description": "Returns the total number of rows in the range. Read-only."
+        },
+        "rowHidden": {
+          "type": "boolean",
+          "description": "Represents if all rows of the current range are hidden."
+        },
+        "rowIndex": {
+          "type": "int64",
+          "description": "Returns the row number of the first cell in the range. Zero-indexed. Read-only."
+        },
+        "text": {
+          "type": "string",
+          "description": "Text values of the specified range. The Text value will not depend on the cell width. The # sign substitution that happens in Excel UI will not affect the text value returned by the API. Read-only."
+        },
+        "valueTypes": {
+          "type": "string",
+          "description": "Represents the type of data of each cell. Possible values are: Unknown, Empty, String, Integer, Double, Boolean, Error. Read-only."
+        },
+        "values": {
+          "type": "string",
+          "description": "Represents the raw values of the specified range. The data returned could be of type string, number, or a boolean. Cell that contain an error will return the error string."
+        }
+      }
+    },
+    "microsoft_graph_rangeBorder": {
+      "properties": {
+        "color": {
+          "type": "string",
+          "description": "HTML color code representing the color of the border line, of the form #RRGGBB (e.g. \"FFA500\") or as a named HTML color (e.g. \"orange\")."
+        },
+        "id": {
+          "type": "string",
+          "description": "Represents border identifier. Possible values are: EdgeTop, EdgeBottom, EdgeLeft, EdgeRight, InsideVertical, InsideHorizontal, DiagonalDown, DiagonalUp. Read-only."
+        },
+        "sideIndex": {
+          "type": "string",
+          "description": "Constant value that indicates the specific side of the border. Possible values are: EdgeTop, EdgeBottom, EdgeLeft, EdgeRight, InsideVertical, InsideHorizontal, DiagonalDown, DiagonalUp. Read-only."
+        },
+        "style": {
+          "type": "string",
+          "description": "One of the constants of line style specifying the line style for the border. Possible values are: None, Continuous, Dash, DashDot, DashDotDot, Dot, Double, SlantDashDot."
+        },
+        "weight": {
+          "type": "string",
+          "description": "Specifies the weight of the border around a range. Possible values are: Hairline, Thin, Medium, Thick."
+        }
+      }
+    },
+    "microsoft_graph_rangeFill": {
+      "properties": {
+        "color": {
+          "type": "string",
+          "description": "HTML color code representing the color of the border line, of the form #RRGGBB (e.g. \"FFA500\") or as a named HTML color (e.g. \"orange\")"
+        }
+      }
+    },
+    "microsoft_graph_rangeFont": {
+      "properties": {
+        "bold": {
+          "type": "boolean",
+          "description": "Represents the bold status of font."
+        },
+        "color": {
+          "type": "string",
+          "description": "HTML color code representation of the text color. E.g. #FF0000 represents Red."
+        },
+        "italic": {
+          "type": "boolean",
+          "description": "Represents the italic status of the font."
+        },
+        "name": {
+          "type": "string",
+          "description": "Font name (e.g. \"Calibri\")"
+        },
+        "size": {
+          "type": "int64",
+          "description": "Font size."
+        },
+        "underline": {
+          "type": "string",
+          "description": "Type of underline applied to the font. Possible values are: None, Single, Double, SingleAccountant, DoubleAccountant."
+        }
+      }
+    },
+    "microsoft_graph_rangeFormat": {
+      "properties": {
+        "columnWidth": {
+          "type": "int64",
+          "description": "Gets or sets the width of all colums within the range. If the column widths are not uniform, null will be returned."
+        },
+        "horizontalAlignment": {
+          "type": "string",
+          "description": "Represents the horizontal alignment for the specified object. Possible values are: General, Left, Center, Right, Fill, Justify, CenterAcrossSelection, Distributed."
+        },
+        "rowHeight": {
+          "type": "int64",
+          "description": "Gets or sets the height of all rows in the range. If the row heights are not uniform null will be returned."
+        },
+        "verticalAlignment": {
+          "type": "string",
+          "description": "Represents the vertical alignment for the specified object. Possible values are: Top, Center, Bottom, Justify, Distributed."
+        },
+        "wrapText": {
+          "type": "boolean",
+          "description": "Indicates if Excel wraps the text in the object. A null value indicates that the entire range doesn't have uniform wrap setting"
+        }
+      }
+    },
+    "microsoft_graph_recipient": {
+      "properties": {
+        "emailAddress": {
+          "$ref": "#/definitions/microsoft_graph_emailAddress",
+          "description": "The recipient's email address."
+        }
+      }
+    },
+    "microsoft_graph_recurrencepattern": {
+      "properties": {
+        "dayOfMonth": {
+          "type": "int64",
+          "description": "The day of the month that the event occurs on."
+        },
+        "daysOfWeek": {
+          "type": "collection",
+          "description": "A collection of the days of the week that the event occurs on. Possible values are: Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday."
+        },
+        "firstDayOfWeek": {
+          "type": "string",
+          "description": "The day of the week  on which the recurrence starts. Possible values are: Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday."
+        },
+        "index": {
+          "type": "string",
+          "description": "The index of the week in which the recurrence occurs.: First, Second, Third, Fourth, Last."
+        },
+        "interval": {
+          "type": "int64",
+          "description": "The number of units of a given recurrence type between occurrences."
+        },
+        "month": {
+          "type": "int64",
+          "description": "The month that the event occurs on.  This is a number from 1 to 12."
+        },
+        "type": {
+          "type": "string",
+          "description": "The recurrence pattern type: Daily, Weekly, AbsoluteMonthly, RelativeMonthly, AbsoluteYearly, RelativeYearly."
+        }
+      }
+    },
+    "microsoft_graph_recurrencerange": {
+      "properties": {
+        "endDate": {
+          "type": "datetimeoffset",
+          "description": "The end date of the series."
+        },
+        "numberOfOccurrences": {
+          "type": "int64",
+          "description": "How many times to repeat the event."
+        },
+        "recurrenceTimeZone": {
+          "type": "string",
+          "description": "Time zone for the startDate and endDate properties."
+        },
+        "startDate": {
+          "type": "datetimeoffset",
+          "description": "The start date of the series."
+        },
+        "type": {
+          "type": "string",
+          "description": "The recurrence range: EndDate = 0, NoEnd = 1, Numbered = 2. Possible values are: EndDate, NoEnd, Numbered."
+        }
+      }
+    },
+    "microsoft_graph_referenceAttachment": {
+      "properties": {
+        "contentType": {
+          "type": "string",
+          "description": "The content type of the attachment."
+        },
+        "id": {
+          "type": "string",
+          "description": "The attachment ID.  Read-only."
+        },
+        "isInline": {
+          "type": "boolean",
+          "description": "Set to true if the attachment appears inline in the body of the embedding object."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "The date and time when the attachment was last modified. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "name": {
+          "type": "string",
+          "description": "The text that is displayed below the icon representing the embedded attachment. This does not need to be the actual file name."
+        },
+        "size": {
+          "type": "int64",
+          "description": "The size of the attachment in bytes."
+        }
+      }
+    },
+    "microsoft_graph_reminder": {
+      "properties": {
+        "changeKey": {
+          "type": "string",
+          "description": "Identifies the version of the reminder. Every time the reminder is changed, changeKey changes as well. This allows Exchange to apply changes to the correct version of the object."
+        },
+        "eventEndTime": {
+          "$ref": "#/definitions/microsoft_graph_dateTimeTimeZone",
+          "description": "The date, time and time zone that the event ends."
+        },
+        "eventId": {
+          "type": "string",
+          "description": "The unique ID of the event. Read only."
+        },
+        "eventLocation": {
+          "$ref": "#/definitions/microsoft_graph_location",
+          "description": "The location of the event."
+        },
+        "eventStartTime": {
+          "$ref": "#/definitions/microsoft_graph_dateTimeTimeZone",
+          "description": "The date, time, and time zone that the event starts."
+        },
+        "eventSubject": {
+          "type": "string",
+          "description": "The text of the event's subject line."
+        },
+        "eventWebLink": {
+          "type": "string",
+          "description": "The URL to open the event in Outlook on the web.The event will open in the browser if you are logged in to your mailbox via Outlook on the web. You will be prompted to login if you are not already logged in with the browser.This URL can be accessed from within an iFrame."
+        },
+        "reminderFireTime": {
+          "$ref": "#/definitions/microsoft_graph_dateTimeTimeZone",
+          "description": "The date, time, and time zone that the reminder is set to occur."
+        }
+      }
+    },
+    "microsoft_graph_remoteItem": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the remote item in its drive. Read-only."
+        },
+        "createdBy": {
+          "$ref": "#/definitions/microsoft_graph_identitySet",
+          "description": "Identity of the user, device, and application which created the item. Read-only."
+        },
+        "createdDateTime": {
+          "type": "datetimeoffset",
+          "description": "Date and time of item creation. Read-only."
+        },
+        "file": {
+          "$ref": "#/definitions/microsoft_graph_file",
+          "description": "Indicates that the remote item is a file. Read-only."
+        },
+        "fileSystemInfo": {
+          "$ref": "#/definitions/microsoft_graph_fileSystemInfo",
+          "description": "Information about the remote item from the local file system. Read-only."
+        },
+        "folder": {
+          "$ref": "#/definitions/microsoft_graph_folder",
+          "description": "Indicates that the remote item is a folder. Read-only."
+        },
+        "lastModifiedBy": {
+          "$ref": "#/definitions/microsoft_graph_identitySet",
+          "description": "Identity of the user, device, and application which last modified the item. Read-only."
+        },
+        "lastModifiedDateTime": {
+          "type": "datetimeoffset",
+          "description": "Date and time the item was last modified. Read-only."
+        },
+        "name": {
+          "type": "string",
+          "description": "Optional. Filename of the remote item. Read-only."
+        },
+        "package": {
+          "$ref": "#/definitions/microsoft_graph_package",
+          "description": "If present, indicates that this item is a package instead of a folder or file. Packages are treated like files in some contexts and folders in others. Read-only."
+        },
+        "parentReference": {
+          "$ref": "#/definitions/microsoft_graph_itemReference",
+          "description": "Properties of the parent of the remote item. Read-only."
+        },
+        "sharepointIds": {
+          "$ref": "#/definitions/microsoft_graph_sharepointIds",
+          "description": "Provides interop between items in OneDrive for Business and SharePoint with the full set of item identifiers. Read-only."
+        },
+        "size": {
+          "type": "int64",
+          "description": "Size of the remote item. Read-only."
+        },
+        "specialFolder": {
+          "$ref": "#/definitions/microsoft_graph_specialFolder",
+          "description": "If the current item is also available as a special folder, this facet is returned. Read-only."
+        },
+        "webDavUrl": {
+          "type": "string",
+          "description": "DAV compatible URL for the item."
+        },
+        "webUrl": {
+          "type": "string",
+          "description": "URL that displays the resource in the browser. Read-only."
+        }
+      }
+    },
+    "microsoft_graph_responseStatus": {
+      "properties": {
+        "response": {
+          "type": "string",
+          "description": "The response type: None = 0, Organizer = 1, TentativelyAccepted = 2, Accepted = 3, Declined = 4, NotResponded = 5. Possible values are: None, Organizer, TentativelyAccepted, Accepted, Declined, NotResponded."
+        },
+        "time": {
+          "type": "datetimeoffset",
+          "description": "The date and time that the response was returned. It uses ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        }
+      }
+    },
+    "microsoft_graph_searchResult": {
+      "properties": {
+        "onClickTelemetryUrl": {
+          "type": "string",
+          "description": "A callback URL that can be used to record telemetry information. The application should issue a GET on this URL if the user interacts with this item to improve the quality of results."
+        }
+      }
+    },
+    "microsoft_graph_servicePlanInfo": {
+      "properties": {
+        "appliesTo": {
+          "type": "string"
+        },
+        "provisioningStatus": {
+          "type": "string",
+          "description": "The provisioning status of the service plan."
+        },
+        "servicePlanId": {
+          "type": "guid",
+          "description": "The unique identifier of the service plan."
+        },
+        "servicePlanName": {
+          "type": "string",
+          "description": "The name of the service plan."
+        }
+      }
+    },
+    "microsoft_graph_shared": {
+      "properties": {
+        "owner": {
+          "$ref": "#/definitions/microsoft_graph_identitySet",
+          "description": "The identity of the owner of the shared item. Read-only."
+        },
+        "scope": {
+          "type": "string",
+          "description": "Indicates the scope of how the item is shared: anonymous, organization, or users. Read-only."
+        }
+      }
+    },
+    "microsoft_graph_sharedDriveItem": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the share being accessed."
+        },
+        "name": {
+          "type": "string",
+          "description": "The display name of the shared item."
+        },
+        "owner": {
+          "$ref": "#/definitions/microsoft_graph_identitySet",
+          "description": "Information about the owner of the shared item being referenced."
+        },
+        "items": {
+          "type": "collection",
+          "description": "A collection of shared DriveItem resources. This collection cannot be enumerated, but items can be accessed by their unique ID."
+        },
+        "root": {
+          "$ref": "#/definitions/microsoft_graph_driveItem",
+          "description": "The top level shared DriveItem. If a single file is shared, this item is the file. If a folder is shared, this item will be the folder. You can use the item's facets to determine which case applies."
+        }
+      }
+    },
+    "microsoft_graph_sharepointIds": {
+      "properties": {
+        "listId": {
+          "type": "string",
+          "description": "The unique identifier for the item's list in SharePoint."
+        },
+        "listItemId": {
+          "type": "string",
+          "description": "An integer identifier for the item within the containing list."
+        },
+        "listItemUniqueId": {
+          "type": "string",
+          "description": "The unique identifier for the item within OneDrive for Busienss or a SharePoint site."
+        },
+        "siteId": {
+          "type": "string",
+          "description": "The unique identifier for the item's site collection."
+        },
+        "webId": {
+          "type": "string",
+          "description": "The unique identifier for the item's site."
+        }
+      }
+    },
+    "microsoft_graph_sharingInvitation": {
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "The email address provided for the recipient of the sharing invitation. Read-only."
+        },
+        "invitedBy": {
+          "$ref": "#/definitions/microsoft_graph_identitySet",
+          "description": "Provides information about who sent the invitation that created this permission, if that information is available. Read-only."
+        },
+        "signInRequired": {
+          "type": "boolean",
+          "description": "If true the recipient of the invitation needs to sign in in order to access the shared item. Read-only."
+        }
+      }
+    },
+    "microsoft_graph_sharingLink": {
+      "properties": {
+        "application": {
+          "$ref": "#/definitions/microsoft_graph_identity",
+          "description": "The app the link is associated with."
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of the link created."
+        },
+        "scope": {
+          "type": "string",
+          "description": "The scope of the link represented by this permission. Value anonymous indicates the link is usable by anyone, organization indicates the link is only usable for users signed into the same tenant."
+        },
+        "webUrl": {
+          "type": "string",
+          "description": "A URL that opens the item in the browser on the OneDrive website."
+        }
+      }
+    },
+    "microsoft_graph_singlevaluelegacyextendedproperty": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The property ID used to identify the property. Read-only."
+        },
+        "value": {
+          "type": "string",
+          "description": "A property value."
+        }
+      }
+    },
+    "microsoft_graph_sortField": {
+      "properties": {
+        "ascending": {
+          "type": "boolean",
+          "description": "Represents whether the sorting is done in an ascending fashion."
+        },
+        "color": {
+          "type": "string",
+          "description": "Represents the color that is the target of the condition if the sorting is on font or cell color."
+        },
+        "dataOption": {
+          "type": "string",
+          "description": "Represents additional sorting options for this field. Possible values are: Normal, TextAsNumber."
+        },
+        "key": {
+          "type": "int64",
+          "description": "Represents the column (or row, depending on the sort orientation) that the condition is on. Represented as an offset from the first column (or row)."
+        },
+        "sortOn": {
+          "type": "string",
+          "description": "Represents the type of sorting of this condition. Possible values are: Value, CellColor, FontColor, Icon."
+        }
+      }
+    },
+    "microsoft_graph_specialFolder": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The unique identifier for this item in the /drive/special collection"
+        }
+      }
+    },
+    "microsoft_graph_subscribedSku": {
+      "properties": {
+        "appliesTo": {
+          "type": "string",
+          "description": "For example, \"User\" or \"Company\"."
+        },
+        "capabilityStatus": {
+          "type": "string",
+          "description": "For example, \"Enabled\", \"LockedOut\", and \"Suspended\"."
+        },
+        "consumedUnits": {
+          "type": "int64",
+          "description": "The number of licenses that have been assigned."
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the subscribed sku object. Key. Read-only."
+        },
+        "prepaidUnits": {
+          "$ref": "#/definitions/microsoft_graph_licenseUnitsDetail",
+          "description": "Information about the number and status of prepaid licenses."
+        },
+        "servicePlans": {
+          "type": "collection",
+          "description": "Information about the service plans that are available with the SKU."
+        },
+        "skuId": {
+          "type": "guid",
+          "description": "The unique identifier (GUID) for the service SKU."
+        },
+        "skuPartNumber": {
+          "type": "string",
+          "description": "The SKU part number; for example: \"AAD_PREMIUM\" or \"RMSBASIC\"."
+        }
+      }
+    },
+    "microsoft_graph_subscription": {
+      "properties": {
+        "changeType": {
+          "type": "string",
+          "description": "Indicates the type of change in the subscribed resource that will raise a notification. The supported values are: created, updated, deleted. Multiple values can be combined using a comma-separated list."
+        },
+        "notificationUrl": {
+          "type": "string",
+          "description": "The URL of the endpoint that will receive the notifications. This URL has to make use of the HTTPS protocol."
+        },
+        "resource": {
+          "type": "string",
+          "description": "Specifies the resource that will be monitored for changes. Do not include the base URL (\"https://graph.microsoft.com/v1.0/\")."
+        },
+        "expirationDateTime": {
+          "type": "datetimeoffset",
+          "description": "Specifies the date and time when the webhook subscription expires. The time is in UTC, and can be an amount of time from subscription creation that varies for the resource subscribed to.  See the table below for maximum values."
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the subscription. Read-only."
+        },
+        "clientState": {
+          "type": "string",
+          "description": "Specifies the value of the clientState property sent by the service in each notification. The maximum length is 128 characters. The client can check that the notification came from the service by comparing the value of the clientState property sent with the subscription with the value of the clientState property received with each notification."
+        }
+      }
+    },
+    "microsoft_graph_table": {
+      "properties": {
+        "highlightFirstColumn": {
+          "type": "boolean",
+          "description": "Indicates whether the first column contains special formatting."
+        },
+        "highlightLastColumn": {
+          "type": "boolean",
+          "description": "Indicates whether the last column contains special formatting."
+        },
+        "id": {
+          "type": "string",
+          "description": "Returns a value that uniquely identifies the table in a given workbook. The value of the identifier remains the same even when the table is renamed. Read-only."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the table."
+        },
+        "showBandedColumns": {
+          "type": "boolean",
+          "description": "Indicates whether the columns show banded formatting in which odd columns are highlighted differently from even ones to make reading the table easier."
+        },
+        "showBandedRows": {
+          "type": "boolean",
+          "description": "Indicates whether the rows show banded formatting in which odd rows are highlighted differently from even ones to make reading the table easier."
+        },
+        "showFilterButton": {
+          "type": "boolean",
+          "description": "Indicates whether the filter buttons are visible at the top of each column header. Setting this is only allowed if the table contains a header row."
+        },
+        "showHeaders": {
+          "type": "boolean",
+          "description": "Indicates whether the header row is visible or not. This value can be set to show or remove the header row."
+        },
+        "showTotals": {
+          "type": "boolean",
+          "description": "Indicates whether the total row is visible or not. This value can be set to show or remove the total row."
+        },
+        "style": {
+          "type": "string",
+          "description": "Constant value that represents the Table style. Possible values are: TableStyleLight1 thru TableStyleLight21, TableStyleMedium1 thru TableStyleMedium28, TableStyleStyleDark1 thru TableStyleStyleDark11. A custom user-defined style present in the workbook can also be specified."
+        }
+      }
+    },
+    "microsoft_graph_tableColumn": {
+      "properties": {
+        "id": {
+          "type": "int64",
+          "description": "Returns a unique key that identifies the column within the table. Read-only."
+        },
+        "index": {
+          "type": "int64",
+          "description": "Returns the index number of the column within the columns collection of the table. Zero-indexed. Read-only."
+        },
+        "name": {
+          "type": "string",
+          "description": "Returns the name of the table column. Read-only."
+        },
+        "values": {
+          "type": "string",
+          "description": "Represents the raw values of the specified range. The data returned could be of type string, number, or a boolean. Cell that contain an error will return the error string."
+        }
+      }
+    },
+    "microsoft_graph_tableRow": {
+      "properties": {
+        "index": {
+          "type": "int64",
+          "description": "Returns the index number of the row within the rows collection of the table. Zero-indexed. Read-only."
+        },
+        "values": {
+          "type": "string",
+          "description": "Represents the raw values of the specified range. The data returned could be of type string, number, or a boolean. Cell that contain an error will return the error string."
+        }
+      }
+    },
+    "microsoft_graph_tableSort": {
+      "properties": {
+        "matchCase": {
+          "type": "boolean",
+          "description": "Represents whether the casing impacted the last sort of the table. Read-only."
+        },
+        "method": {
+          "type": "string",
+          "description": "Represents Chinese character ordering method last used to sort the table. Possible values are: PinYin, StrokeCount. Read-only."
+        }
+      }
+    },
+    "microsoft_graph_thumbnail": {
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The URL used to fetch the thumbnail content."
+        },
+        "height": {
+          "type": "int64",
+          "description": "The height of the thumbnail, in pixels."
+        },
+        "width": {
+          "type": "int64",
+          "description": "The width of the thumbnail, in pixels."
+        },
+        "content": {
+          "type": "stream",
+          "description": "The content stream."
+        }
+      }
+    },
+    "microsoft_graph_thumbnailSet": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The id within the item. Read-only."
+        },
+        "large": {
+          "$ref": "#/definitions/microsoft_graph_thumbnail",
+          "description": "A 1920x1920 scaled thumbnail."
+        },
+        "medium": {
+          "$ref": "#/definitions/microsoft_graph_thumbnail",
+          "description": "A 176x176 scaled thumbnail."
+        },
+        "small": {
+          "$ref": "#/definitions/microsoft_graph_thumbnail",
+          "description": "A 48x48 cropped thumbnail."
+        },
+        "source": {
+          "$ref": "#/definitions/microsoft_graph_thumbnail",
+          "description": "A custom thumbnail image or the original image used to generate other thumbnails."
+        }
+      }
+    },
+    "microsoft_graph_timeconstraint": {
+      "properties": {
+        "activityDomain": {
+          "type": "string",
+          "description": "The nature of the activity, optional. Possible values are: unknown, work, personal. Currently findMeetingTimes always assumes the value is work and returns any meeting suggestions only during the work hours of the organizer or attendee."
+        },
+        "timeslots": {
+          "type": "collection",
+          "description": "An array of time periods."
+        }
+      }
+    },
+    "microsoft_graph_timeSlot": {
+      "properties": {
+        "end": {
+          "$ref": "#/definitions/microsoft_graph_dateTimeTimeZone",
+          "description": "The time a period begins."
+        },
+        "start": {
+          "$ref": "#/definitions/microsoft_graph_dateTimeTimeZone",
+          "description": "The time the period ends."
+        }
+      }
+    },
+    "microsoft_graph_uploadSession": {
+      "properties": {
+        "expirationDateTime": {
+          "type": "datetimeoffset",
+          "description": "The date and time in UTC that the upload session will expire. The complete file must be uploaded before this expiration time is reached."
+        },
+        "nextExpectedRanges": {
+          "type": "collection",
+          "description": "A collection of byte ranges that the server is missing for the file. These ranges are zero indexed and of the format \"start-end\" (e.g. \"0-26\" to indicate the first 27 bytes of the file)."
+        },
+        "uploadUrl": {
+          "type": "string",
+          "description": "The URL endpoint that accepts PUT requests for byte ranges of the file."
+        }
+      }
+    },
+    "microsoft_graph_user": {
+      "properties": {
+        "aboutMe": {
+          "type": "string",
+          "description": "A freeform text entry field for the user to describe themselves."
+        },
+        "accountEnabled": {
+          "type": "boolean",
+          "description": "true if the account is enabled; otherwise, false. This property is required when a user is created. Supports $filter."
+        },
+        "assignedLicenses": {
+          "type": "collection",
+          "description": "The licenses that are assigned to the user. Not nullable."
+        },
+        "assignedPlans": {
+          "type": "collection",
+          "description": "The plans that are assigned to the user. Read-only. Not nullable."
+        },
+        "birthday": {
+          "type": "datetimeoffset",
+          "description": "The birthday of the user. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "businessPhones": {
+          "type": "collection"
+        },
+        "city": {
+          "type": "string",
+          "description": "The city in which the user is located. Supports $filter."
+        },
+        "companyName": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string",
+          "description": "The country/region in which the user is located; for example, “US” or “UK”. Supports $filter."
+        },
+        "department": {
+          "type": "string",
+          "description": "The name for the department in which the user works. Supports $filter."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The name displayed in the address book for the user. This is usually the combination of the user's first name, middle initial and last name. This property is required when a user is created and it cannot be cleared during updates. Supports $filter and $orderby."
+        },
+        "givenName": {
+          "type": "string",
+          "description": "The given name (first name) of the user. Supports $filter."
+        },
+        "hireDate": {
+          "type": "datetimeoffset",
+          "description": "The hire date of the user. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'"
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the user. Inherited from directoryObject. Key. Not nullable. Read-only."
+        },
+        "interests": {
+          "type": "collection",
+          "description": "A list for the user to describe their interests."
+        },
+        "jobTitle": {
+          "type": "string",
+          "description": "The user’s job title. Supports $filter."
+        },
+        "mail": {
+          "type": "string",
+          "description": "The SMTP address for the user, for example, \"jeff@contoso.onmicrosoft.com\". Read-Only. Supports $filter."
+        },
+        "mailboxSettings": {
+          "$ref": "#/definitions/microsoft_graph_mailboxSettings",
+          "description": "Settings for the primary mailbox of the signed-in user. You can get or update settings for sending automatic replies to incoming messages, locale and time zone."
+        },
+        "mailNickname": {
+          "type": "string",
+          "description": "The mail alias for the user. This property must be specified when a user is created. Supports $filter."
+        },
+        "mobilePhone": {
+          "type": "string",
+          "description": "The primary cellular telephone number for the user."
+        },
+        "mySite": {
+          "type": "string",
+          "description": "The URL for the user's personal site."
+        },
+        "officeLocation": {
+          "type": "string",
+          "description": "The office location in the user's place of business."
+        },
+        "onPremisesImmutableId": {
+          "type": "string",
+          "description": "This property is used to associate an on-premises Active Directory user account to their Azure AD user object. This property must be specified when creating a new user account in the Graph if you are using a federated domain for the user’s userPrincipalName (UPN) property. Important: The $ and  characters cannot be used when specifying this property. Supports $filter."
+        },
+        "onPremisesLastSyncDateTime": {
+          "type": "datetimeoffset",
+          "description": "Indicates the last time at which the object was synced with the on-premises directory; for example: \"2013-02-16T03:04:54Z\". The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'. Read-only."
+        },
+        "onPremisesSecurityIdentifier": {
+          "type": "string",
+          "description": "Contains the on-premises security identifier (SID) for the user that was synchronized from on-premises to the cloud. Read-only."
+        },
+        "onPremisesSyncEnabled": {
+          "type": "boolean",
+          "description": "true if this object is synced from an on-premises directory; false if this object was originally synced from an on-premises directory but is no longer synced; null if this object has never been synced from an on-premises directory (default). Read-only"
+        },
+        "passwordPolicies": {
+          "type": "string",
+          "description": "Specifies password policies for the user. This value is an enumeration with one possible value being “DisableStrongPassword”, which allows weaker passwords than the default policy to be specified. “DisablePasswordExpiration” can also be specified. The two may be specified together; for example: \"DisablePasswordExpiration, DisableStrongPassword\"."
+        },
+        "passwordProfile": {
+          "$ref": "#/definitions/microsoft_graph_passwordProfile",
+          "description": "Specifies the password profile for the user. The profile contains the user’s password. This property is required when a user is created. The password in the profile must satisfy minimum requirements as specified by the passwordPolicies property. By default, a strong password is required."
+        },
+        "pastProjects": {
+          "type": "collection",
+          "description": "A list for the user to enumerate their past projects."
+        },
+        "postalCode": {
+          "type": "string",
+          "description": "The postal code for the user's postal address. The postal code is specific to the user's country/region. In the United States of America, this attribute contains the ZIP code."
+        },
+        "preferredLanguage": {
+          "type": "string",
+          "description": "The preferred language for the user. Should follow ISO 639-1 Code; for example \"en-US\"."
+        },
+        "preferredName": {
+          "type": "string",
+          "description": "The preferred name for the user."
+        },
+        "provisionedPlans": {
+          "type": "collection",
+          "description": "The plans that are provisioned for the user. Read-only. Not nullable."
+        },
+        "proxyAddresses": {
+          "type": "collection",
+          "description": "For example: [\"SMTP: bob@contoso.com\", \"smtp: bob@sales.contoso.com\"] The any operator is required for filter expressions on multi-valued properties. Read-only, Not nullable. Supports $filter."
+        },
+        "responsibilities": {
+          "type": "collection",
+          "description": "A list for the user to enumerate their responsibilities."
+        },
+        "schools": {
+          "type": "collection",
+          "description": "A list for the user to enumerate the schools they have attended."
+        },
+        "skills": {
+          "type": "collection",
+          "description": "A list for the user to enumerate their skills."
+        },
+        "state": {
+          "type": "string",
+          "description": "The state or province in the user's address. Supports $filter."
+        },
+        "streetAddress": {
+          "type": "string",
+          "description": "The street address of the user's place of business."
+        },
+        "surname": {
+          "type": "string",
+          "description": "The user's surname (family name or last name). Supports $filter."
+        },
+        "usageLocation": {
+          "type": "string",
+          "description": "A two letter country code (ISO standard 3166). Required for users that will be assigned licenses due to legal requirement to check for availability of services in countries.  Examples include: \"US\", \"JP\", and \"GB\". Not nullable. Supports $filter."
+        },
+        "userPrincipalName": {
+          "type": "string",
+          "description": "The user principal name (UPN) of the user. The UPN is an Internet-style login name for the user based on the Internet standard RFC 822. By convention, this should map to the user's email name. The general format is alias@domain, where domain must be present in the tenant’s collection of verified domains. This property is required when a user is created. The verified domains for the tenant can be accessed from the verifiedDomains property of organization. Supports $filter and $orderby."
+        },
+        "userType": {
+          "type": "string",
+          "description": "A string value that can be used to classify user types in your directory, such as “Member” and “Guest”. Supports $filter."
+        },
+        "calendar": {
+          "$ref": "#/definitions/microsoft_graph_calendar",
+          "description": "The user's primary calendar. Read-only."
+        },
+        "calendarGroups": {
+          "type": "collection",
+          "description": "The user's calendar groups. Read-only. Nullable."
+        },
+        "calendarView": {
+          "type": "collection",
+          "description": "The calendar view for the calendar. Read-only. Nullable."
+        },
+        "calendars": {
+          "type": "collection",
+          "description": "The user's calendars. Read-only. Nullable."
+        },
+        "contacts": {
+          "type": "collection",
+          "description": "The user's contacts. Read-only. Nullable."
+        },
+        "contactFolders": {
+          "type": "collection",
+          "description": "The user's contacts folders. Read-only. Nullable."
+        },
+        "createdObjects": {
+          "type": "collection",
+          "description": "Directory objects that were created by the user. Read-only. Nullable."
+        },
+        "directReports": {
+          "type": "collection",
+          "description": "The users and contacts that report to the user. (The users and contacts that have their manager property set to this user.) Read-only. Nullable."
+        },
+        "drive": {
+          "$ref": "#/definitions/microsoft_graph_drive",
+          "description": "The user's OneDrive. Read-only."
+        },
+        "events": {
+          "type": "collection",
+          "description": "The user's events. Default is to show Events under the Default Calendar. Read-only. Nullable."
+        },
+        "inferenceClassification": {
+          "$ref": "#/definitions/microsoft_graph_inferenceClassification",
+          "description": "Relevance classification of the user's messages based on explicit designations which override inferred relevance or importance."
+        },
+        "mailFolders": {
+          "type": "collection",
+          "description": "The user's mail folders. Read-only. Nullable."
+        },
+        "manager": {
+          "$ref": "#/definitions/microsoft_graph_directoryObject",
+          "description": "The user or contact that is this user’s manager. Read-only. (HTTP Methods: GET, PUT, DELETE.)"
+        },
+        "memberOf": {
+          "type": "collection",
+          "description": "The groups and directory roles that the user is a member of. Read-only. Nullable."
+        },
+        "messages": {
+          "type": "collection",
+          "description": "The messages in a mailbox or folder. Read-only. Nullable."
+        },
+        "ownedDevices": {
+          "type": "collection",
+          "description": "Devices that are owned by the user. Read-only. Nullable."
+        },
+        "photo": {
+          "$ref": "#/definitions/microsoft_graph_profilePhoto",
+          "description": "The user's profile photo. Read-only."
+        },
+        "registeredDevices": {
+          "type": "collection",
+          "description": "Devices that are registered for the user. Read-only. Nullable."
+        }
+      }
+    },
+    "microsoft_graph_verifieddomain": {
+      "properties": {
+        "capabilities": {
+          "type": "string",
+          "description": "For example, “Email”, “OfficeCommunicationsOnline”."
+        },
+        "isDefault": {
+          "type": "boolean",
+          "description": "true if this is the default domain associated with the tenant; otherwise, false."
+        },
+        "isInitial": {
+          "type": "boolean",
+          "description": "true if this is the initial domain associated with the tenant; otherwise, false"
+        },
+        "name": {
+          "type": "string",
+          "description": "The domain name; for example, “contoso.onmicrosoft.com”"
+        },
+        "type": {
+          "type": "string",
+          "description": "For example, “Managed”."
+        }
+      }
+    },
+    "microsoft_graph_video": {
+      "properties": {
+        "bitrate": {
+          "type": "int64",
+          "description": "Bit rate of the video in bits per second."
+        },
+        "duration": {
+          "type": "int64",
+          "description": "Duration of the file in milliseconds."
+        },
+        "height": {
+          "type": "int64",
+          "description": "Height of the video, in pixels."
+        },
+        "width": {
+          "type": "int64",
+          "description": "Width of the video, in pixels."
+        }
+      }
+    },
+    "microsoft_graph_workbookPivotTable": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Id of the PivotTable.\tRead-only."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the PivotTable."
+        }
+      }
+    },
+    "microsoft_graph_workbookRangeView": {
+      "properties": {
+        "cellAddresses": {
+          "type": "string"
+        },
+        "columnCount": {
+          "type": "int64",
+          "description": "Returns the number of visible columns. Read-only."
+        },
+        "formulas": {
+          "type": "string",
+          "description": "Represents the formula in A1-style notation."
+        },
+        "formulasLocal": {
+          "type": "string",
+          "description": "Represents the formula in A1-style notation, in the user's language and number-formatting locale. For example, the English \"=SUM(A1, 1.5)\" formula would become \"=SUMME(A1; 1,5)\" in German."
+        },
+        "formulasR1C1": {
+          "type": "string",
+          "description": "Represents the formula in R1C1-style notation."
+        },
+        "id": {
+          "type": "string"
+        },
+        "index": {
+          "type": "int64",
+          "description": "Index of the range."
+        },
+        "numberFormat": {
+          "type": "string",
+          "description": "Represents Excel's number format code for the given cell. Read-only."
+        },
+        "rowCount": {
+          "type": "int64",
+          "description": "Returns the number of visible rows. Read-only."
+        },
+        "text": {
+          "type": "string",
+          "description": "Text values of the specified range. The Text value will not depend on the cell width. The # sign substitution that happens in Excel UI will not affect the text value returned by the API. Read-only."
+        },
+        "valueTypes": {
+          "type": "string",
+          "description": "Represents the type of data of each cell. Read-only. Possible values are: Unknown, Empty, String, Integer, Double, Boolean, Error."
+        },
+        "values": {
+          "type": "string",
+          "description": "Represents the raw values of the specified range view. The data returned could be of type string, number, or a boolean. Cell that contain an error will return the error string."
+        }
+      }
+    },
+    "microsoft_graph_worksheet": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Returns a value that uniquely identifies the worksheet in a given workbook. The value of the identifier remains the same even when the worksheet is renamed or moved. Read-only."
+        },
+        "name": {
+          "type": "string",
+          "description": "The display name of the worksheet."
+        },
+        "position": {
+          "type": "int64",
+          "description": "The zero-based position of the worksheet within the workbook."
+        },
+        "visibility": {
+          "type": "string",
+          "description": "The Visibility of the worksheet. Possible values are: Visible, Hidden, VeryHidden."
+        }
+      }
+    },
+    "microsoft_graph_worksheetProtection": {
+      "properties": {
+        "protected": {
+          "type": "boolean",
+          "description": "Indicates if the worksheet is protected.  Read-only."
+        }
+      }
+    },
+    "microsoft_graph_worksheetProtectionOptions": {
+      "properties": {
+        "allowAutoFilter": {
+          "type": "boolean",
+          "description": "Represents the worksheet protection option of allowing using auto filter feature."
+        },
+        "allowDeleteColumns": {
+          "type": "boolean",
+          "description": "Represents the worksheet protection option of allowing deleting columns."
+        },
+        "allowDeleteRows": {
+          "type": "boolean",
+          "description": "Represents the worksheet protection option of allowing deleting rows."
+        },
+        "allowFormatCells": {
+          "type": "boolean",
+          "description": "Represents the worksheet protection option of allowing formatting cells."
+        },
+        "allowFormatColumns": {
+          "type": "boolean",
+          "description": "Represents the worksheet protection option of allowing formatting columns."
+        },
+        "allowFormatRows": {
+          "type": "boolean",
+          "description": "Represents the worksheet protection option of allowing formatting rows."
+        },
+        "allowInsertColumns": {
+          "type": "boolean",
+          "description": "Represents the worksheet protection option of allowing inserting columns."
+        },
+        "allowInsertHyperlinks": {
+          "type": "boolean",
+          "description": "Represents the worksheet protection option of allowing inserting hyperlinks."
+        },
+        "allowInsertRows": {
+          "type": "boolean",
+          "description": "Represents the worksheet protection option of allowing inserting rows."
+        },
+        "allowPivotTables": {
+          "type": "boolean",
+          "description": "Represents the worksheet protection option of allowing using pivot table feature."
+        },
+        "allowSort": {
+          "type": "boolean",
+          "description": "Represents the worksheet protection option of allowing using sort feature."
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "microsoftAccount": []
+    }
+  ],
+  "securityDefinitions": {
+    "microsoftAccount": {
+      "type": "oauth2",
+      "scopes": {},
+      "flow": "implicit",
+      "authorizationUrl": "https://login.live.com/oauth20_authorize.srf"
+    }
+  }
+}
