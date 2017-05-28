@@ -49,7 +49,7 @@
             }
           }
         },
-        "operationId": "cae4e553-17c4-4e1f-9285-cac69c820530"
+        "operationId": "DriveItems"
       }
     },
     "/me/drive/root:/{item-path}:/content": {
