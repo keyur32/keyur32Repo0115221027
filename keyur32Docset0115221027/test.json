@@ -7,8 +7,8 @@
     "headers": "application/json",
     "queryString": "[]",
     "postData": "{ }",
-    "headersSize": 150,
-    "bodySize": "150",
+    "headersSize": -1,
+    "bodySize": "-1",
     "comment": "chartfill_clear"
   }
 }
