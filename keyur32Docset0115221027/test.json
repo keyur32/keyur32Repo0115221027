@@ -2,9 +2,6 @@
   "method": "POST",
   "url": "http://graph.microsoft.com/v1.0/me",
   "httpVersion": "HTTP/1.1",
-  "queryString": [],
-  "headers": [],
-  "cookies":  [],
   "postData": {
     "mimeType": "application/json",
     "text": "{\"foo\": \"bar\"}"
