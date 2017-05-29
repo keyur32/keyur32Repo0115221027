@@ -1,14 +1,13 @@
-{
+
   "request": {
     "url": "https://graph.microsoft.com/v1.0/me/drive/items/{id}/workbook/worksheets(<id|name>)/charts(<name>)/format/fill/clear",
     "method": "POST",
     "httpVersion": "HTTP/1.1",
     "cookies": "[]",
-    "headers": "application/json",
+    "headers": "[]",
     "queryString": "[]",
     "postData": "{ }",
     "headersSize": -1,
     "bodySize": "-1",
     "comment": "chartfill_clear"
   }
-}
