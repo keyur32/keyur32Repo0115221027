@@ -1,9 +1,12 @@
 {
-  "method": "POST",
-  "url": "http://graph.microsoft.com/v1.0/me",
-  "httpVersion": "HTTP/1.1",
-  "postData": {
-    "mimeType": "application/json",
-    "text": "{\"foo\": \"bar\"}"
+  "request": {
+    "url": "https://graph.microsoft.com/v1.0/me/events/{id}/attachments/{id}\n",
+    "method": "DELETE",
+    "httpVersion": "HTTP/1.1",
+    "headers": "application/json",
+    "postData": "{ }",
+    "headersSize": 150,
+    "bodySize": "150",
+    "comment": "delete_attachment"
   }
 }
