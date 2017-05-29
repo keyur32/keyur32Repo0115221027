@@ -2,10 +2,7 @@
   "method": "POST",
   "url": "http://mockbin.com/request",
   "httpVersion": "HTTP/1.1",
-  "queryString": [
-    { "name": "foo", "value": "bar" },
-    { "name": "foo", "value": "baz" }
-  ],
+  "queryString": [],
   "headers": [
     { "name": "Accept", "value": "application/json" },
     { "name": "Content-Type", "value": "application/json" }
