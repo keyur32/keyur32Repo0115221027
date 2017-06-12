@@ -1,151 +1,70 @@
-adfadf
-# Add a Web Part to a page in a SharePoint-hosted SharePoint Add-in
-Learn how to include Web Parts in a page in an SharePoint Add-ins.
- 
-
- **Note**  The name "apps for SharePoint" is changing to "SharePoint Add-ins". During the transition, the documentation and the UI of some SharePoint products and Visual Studio tools might still use the term "apps for SharePoint". For details, see  [New name for apps for Office and SharePoint](new-name-for-apps-for-sharepoint.md#bk_newname).
- 
-
-This is the fifth in a series of articles about the basics of developing SharePoint-hosted SharePoint Add-ins. You should first be familiar with  [SharePoint Add-ins](sharepoint-add-ins.md) and the earlier articles in this series:
- 
-
--  [Get started creating SharePoint-hosted SharePoint Add-ins](get-started-creating-sharepoint-hosted-sharepoint-add-ins.md)
-    
- 
--  [Deploy and install a SharePoint-hosted SharePoint Add-in](deploy-and-install-a-sharepoint-hosted-sharepoint-add-in.md)
-    
- 
--  [Add custom columns to a SharePoint-hostedSharePoint Add-in](add-custom-columns-to-a-sharepoint-hostedsharepoint-add-in.md)
-    
- 
--  [Add a custom content type to a SharePoint-hostedSharePoint Add-in](add-a-custom-content-type-to-a-sharepoint-hostedsharepoint-add-in.md)
-    
- 
-
- **Note**  If you have been working through this series about SharePoint-hosted add-ins, then you have a Visual Studio solution that you can use to continue with this topic. You can also download the repository at  [SharePoint_SP-hosted_Add-Ins_Tutorials](https://github.com/OfficeDev/SharePoint_SP-hosted_Add-Ins_Tutorials) and open the BeforeWebPart.sln file.
- 
-
-In this article you add a Web Part to the default page of the Employee Orientation SharePoint Add-in.
- 
-
-## Add a Web Part to a page
+# BaseClientSideWebPart <TProperties> class
 
 
- 
 
- 
-
-1. In  **Solution Explorer**, open the Default.aspx file. 
-    
- 
-2. We'll be adding a list view Web Part to the page that surfaces the New Employees in Seattle list, so there's no longer a need to have a link to the list view page for the list. Remove the **<asp:HyperLink>** element from the **<asp:Content>** element whose **ContentPlaceHolderId** is `PlaceHolderMain`. 
-    
- 
-3. Inside the same  **<asp:Content>** element, add the following **WebPartZone**. 
-    
-  ```XML
-  <WebPartPages:WebPartZone runat="server" FrameType="TitleBarOnly" 
-      ID="HomePage1" Title="loc:full" />
-
-  ```
-
-4. Save and close the file.
-    
- 
-5. In  **Solution Explorer**, open the elements.xml file for the page in the  **Pages** node.
-    
- 
-6. If the  **File** element is self-closing, remove the "/" character from it and add the end tag `</File>`.
-    
- 
-7. In the  **File** element, add a child **AllUsersWebPart** element and set its **WebPartZoneID** to the ID of the Web Part zone that you created on the page. The file's contents should now look like the following. This markup tells SharePoint to insert an **AllUsersWebPart** into the Web Part zone that is named "HomePage1".
-    
-  ```
-  <Elements xmlns="http://schemas.microsoft.com/sharepoint/">
-  <Module Name="Pages">
-    <File Path="Pages\Default.aspx" Url="Pages/Default.aspx" ReplaceContent="TRUE" >
-      <AllUsersWebPart WebPartZoneID="HomePage1" WebPartOrder="1">
-
-      </AllUsersWebPart>
-    </File>
-  </Module>
-</Elements>
-
-  ```
-
-8. Add a  **CDATA** element as a child of the **AllUsersWebPart**, then add a  **webParts** element as a child of the **CDATA**, as shown in the following markup. 
-    
-  ```
-  <AllUsersWebPart WebPartZoneID="HomePage1" WebPartOrder="1">
-  <![CDATA[
-    <webParts>
-
-    </webParts>
-  ]]>
-</AllUsersWebPart>
-  ```
-
-9. Add the following  **webPart** markup as a child of the **webParts** element. This markup adds an **XsltListViewWebPart** and tells the Web Part to show theNew Employees in Seattle list. Note that the **ViewContentTypeId** property value is just "0x", not the actual ID of theNewEmployee content type.
-    
-  ```
-  
-  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
-    <metaData>
-      <type name="Microsoft.SharePoint.WebPartPages.XsltListViewWebPart, 
-                   Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, 
-                   PublicKeyToken=71e9bce111e9429c" />
-    </metaData>
-    <data>
-      <properties>
-        <property name="ListUrl">Lists/NewEmployeesInSeattle</property>
-        <property name="IsIncluded">True</property>
-        <property name="NoDefaultStyle">True</property>
-        <property name="Title">New Employees in Seattle</property>
-        <property name="PageType">PAGE_NORMALVIEW</property>
-        <property name="Default">False</property>
-        <property name="ViewContentTypeId">0x</property>
-      </properties>
-    </data>
-  </webPart>
-  ```
+_Type parameters: `<TProperties>`_
 
 
-## Run and test the add-in
+
+This abstract class implements the the base functionality for a client side web part. Every client side web part needs to inherit from this class. Along with the base functionality, this class provides some APIs that can be used by the web part. These APIs fall in two catagories. The first category of APIs provide data and functionality. Example, the web part context (i.e. this.context). This API should be used to access contextual data relevant to this web part instance. The second category of APIs provide a base implementation for the web part lifecycle and can be overridden for an updated implementation. The render() API is the only API that is mandatory to be implemented/overridden by a web part. All other life cycle APIs have a base implementation and can be overridden based on the needs of the web part. Please refer to the documentation of the individual APIs to make the right decision.
 
 
- 
+## Constructor
+Constructor for the BaseClientSideWebPart class. If a sub class overrides the constructor, it needs to call super() as the first line of its constructor. It is highly recommended that the web part use the OnInit API to perform any web part specific initialization. Most of the web part features like this.context and this.properties are not available to be used before the the onInit part of the web part loading lifecycle. e.g. constructor() { super(); . . class specific constructor code .. }
 
- 
+**Signature:** _constructor();_
 
-1. Use the F5 key to deploy and run your add-in. Visual Studio makes a temporary installation of the add-in on your test SharePoint site and immediately runs the add-in. 
-    
- 
-2. When the add-in's default page opens, the list view Web Part is on it and the list is displayed. 
-    
-    **Default page with list view Web part**
+**Returns**: 
 
- 
 
-     ![Default page of the add-in with the "New Employees in Seattle" list displayed in a Web Part.](../../images/31e8e4b1-e2e6-416b-b360-9979a1f16fc7.PNG)
- 
 
-    
-    
- 
-3. Try adding new items to the list and editing existing items.
-    
- 
-4. To end the debugging session, close the browser window or stop debugging in Visual Studio. Each time that you press F5, Visual Studio will retract the previous version of the add-in and install the latest one.
-    
- 
-5. You will work with this add-in and Visual Studio solution in other articles, and it's a good practice to retract the add-in one last time when you are done working with it for a while. Right-click the project in  **Solution Explorer** and choose **Retract**.
-    
- 
+#### Parameters
+None
 
-## 
-<a name="Nextsteps"> </a>
 
-In the next article in this series, you'll add a workflow to the SharePoint Add-in:  [Add a workflow to a SharePoint-hosted SharePoint Add-in](add-a-workflow-to-a-sharepoint-hosted-sharepoint-add-in.md).
- 
+## Properties
 
- 
+| Property	   | Access Modifier | Type	| Description|
+|:-------------|:----|:-------|:-----------|
+|`accessibleTitle`     | `public` | `string` | This property points to the accessible title of web part made available to screen readers. The base implementation returns that default title in the manifest. Web parts that want to provide more descriptive title containing contextual information need to override this API. |
+|`canOpenPopupOnRender`     | `public` | `boolean` | _Read-only._ This property indicates whether a web part can open a popup on initial render. In some environments the host re-renders the web parts frequently, and therefor, opening popups during render will cause popups to open repeatedly and hence poor user experience. As an example, the classic SharePoint pages perform postbacks and hence page re-render on all button clicks. If a web part needs to open a popup on render, it should use this API before opening the popup. If this API returns false, the web part should not open popup on initial render. Some web parts that open popups during render are the document embed web part that pops up the file picker on initial render, embedded video web part that pops up the PropertyPane on initial render. |
+|`context`     | `public` | [`IWebPartContext`](../sp-webpart-base/iwebpartcontext.md) | _Read-only._ This property is a pointer to the web part context. |
+|`dataVersion`     | `public` | [`Version`](../sp-core-library/version.md) | _Read-only._ The value of this property is stored in the serialized data of the web part to allow developers to manage versioning of their web part. The default version is 1.0 |
+|`description`     | `public` | `string` | _Read-only._ Description of the WebPart |
+|`disableReactivePropertyChanges`     | `public` | `boolean` | _Read-only._ This property is used to change the web part's PropertyPane interaction from Reactive to NonReactive. The default behaviour is Reactive. Where, Reactive implies that changes made in the PropertyPane are transmitted to the web part instantly and the user can see instant updates. This helps the page creator get instant feedback and decide if they should keep the new configuration changes or not. NonReactive implies that the configuraiton changes are transmitted to the web part only after 'Apply' PropertyPane button is clicked. |
+|`displayMode`     | `public` | [`DisplayMode`](../sp-core-library/displaymode.md) | _Read-only._ This property is the current display mode of the web part. |
+|`domElement`     | `public` | `HTMLElement` | _Read-only._ This property is a pointer to the root DOM element of the web part. This is a DIV element and contains the whole DOM subtree of the web part. |
+|`isRenderAsync`     | `public` | `boolean` | _Read-only._ Indicates whether the web part is rendering in Async mode. Default value is false. If the web part overrides this field to return true, then it needs to call renderCompleted API after the web part rendering is complete. |
+|`previewImageUrl`     | `public` | `string` | This property points to the preview image for the web part. The base implementation returns undefined. Web parts that want to provide a valid preview image url need to override this API. The preview image url can be used to create a preview of the web part or of the page on which the web part is present. |
+|`properties`     | `public` | `TProperties` | _Read-only._ This property is the pointer to the custom property bag of the web part. |
+|`propertiesMetadata`     | `public` | [`IWebPartPropertiesMetadata`](../sp-webpart-base/iwebpartpropertiesmetadata.md) | _Read-only._ This property defines metadata for the web part property bag. The metadata can help SharePoint understand the content of the properties better and perform relevant services on the data. |
+|`renderedFromPersistedData`     | `public` | `boolean` | _Read-only._ This property indicates whether the web part was rendered from the persisted data (serialized state from the last time that the web part was saved) or not. Example: When web part is added for the first time using toolbox then the value is false. |
+|`renderedOnce`     | `public` | `boolean` | _Read-only._ This property indicates whether the web part has been rendered once or not. After the first time rendering, the value of this property is always true. Till a full re-render of the web part happens. |
+|`title`     | `public` | `string` | _Read-only._ Title of the WebPart |
+
+
+
+
+## Methods
+
+| Method	   | Access Modifier | Returns	| Description|
+|:-------------|:----|:-------|:-----------|
+|[`clearError()`](clearerror-baseclientsidewebpart.md)     | `protected` | `void` | This API should be used to clear the error message from the web part display area. |
+|[`getPropertyPaneConfiguration()`](getpropertypaneconfiguration-baseclientsidewebpart.md)     | `protected` | [`IPropertyPaneConfiguration`](../sp-webpart-base/ipropertypaneconfiguration.md) | This API is used to ger the configuration to build the property pane for the web part. If the web part wants to use the PropertyPane for configuration, this API needs to be overridden and the web part needs to return the configuration for the PropertyPane. |
+|[`onAfterDeserialize(deserializedObject,dataVersion)`](onafterdeserialize-baseclientsidewebpart.md)     | `protected` | `TProperties` | This API is called after the web part is deserialized to an object, right before the property bag is populated. The default implementation is a no-op. A web part developer can override this API if the deserialized object does not fully reflect the initial state of the property bag. This gives the web part developer a chance to populate the property bag right after the data is deserialized to an object. |
+|[`onAfterPropertyPaneChangesApplied()`](onafterpropertypanechangesapplied-baseclientsidewebpart.md)     | `protected` | `void` | This API is invoked after the changes made on the PropertyPane are applied when the PropertyPane is used in Non-Reactive mode. This API is not invoked when the PropertyPane is used in Reactive mode. |
+|[`onBeforeSerialize()`](onbeforeserialize-baseclientsidewebpart.md)     | `protected` | `void` | This API is called before the web part is serialized. The default implementation is a no-op. A web part developer can override this API when the web part's state is not fully reflected in the property bag i.e. this.properties. This gives the web part developer a chance to update the property bag right before serialization. |
+|[`onDisplayModeChanged(oldDisplayMode)`](ondisplaymodechanged-baseclientsidewebpart.md)     | `protected` | `void` | This API is called when the display mode of a web part is changed. The default implementation of this API calls the web part render method to re-render the web part with the new display mode. If a web part developer does not want a full re-render to happen on display mode change, they can override this API and perform specific updates to the web part DOM to switch its display mode. |
+|[`onDispose()`](ondispose-baseclientsidewebpart.md)     | `protected` | `void` | This API should be used to refresh the contents of the PropertyPane. This API is called at the end of the web part lifecycle on a page. It should be used to dispose any local resources (i.e. DOM elements) that the web part is holding onto. This API is expected to be called in scenarios like page navigation i.e. the host is transitioning from one page to another and disposes the page that is being transitioned out. |
+|[`onInit()`](oninit-baseclientsidewebpart.md)     | `protected` | `Promise<void>` | This API should be overridden to perform long running operations e.g. data fetching from a remote service before the initial rendering of the web part. The loading indicator is displayed during the lifetime of this method. This API is called only once during the lifecycle of a web part. |
+|[`onPropertyPaneConfigurationComplete()`](onpropertypaneconfigurationcomplete-baseclientsidewebpart.md)     | `protected` | `void` | This API is invoked when the configuration is completed on the PropertyPane. It's invoked in the following cases: - When the CONFIGURATION_COMPLETE_TIMEOUT((currently the value is 5 secs) elapses after the last change. - When user clicks 'x'(close) button before the CONFIGURATION_COMPLETE_TIMEOUT elapses. - When user clciks 'Apply' button before the CONFIGURATION_COMPLETE_TIMEOUT elapses. - When the user switches web parts then the current web part gets this event. |
+|[`onPropertyPaneConfigurationStart()`](onpropertypaneconfigurationstart-baseclientsidewebpart.md)     | `protected` | `void` | This API is invoked when the configuration starts on the PropertyPane. It's invoked in the following cases: - When the PropertyPane is opened. - When the user switches web parts then the new web part gets this event. |
+|[`onPropertyPaneFieldChanged(propertyPath,oldValue,newValue)`](onpropertypanefieldchanged-baseclientsidewebpart.md)     | `protected` | `void` | This API is invoked after updating the new value of the property in the property bag when the PropertyPane is being used in Reactive mode. The base implementation of this API re-renders the web part. |
+|[`onPropertyPaneRendered()`](onpropertypanerendered-baseclientsidewebpart.md)     | `protected` | `void` | This API is invoked when the PropertyPane is rendered. From framework standpoint, we do not want to allow this event handler to be passed in, and trigger it. This api should be deprecated and then removed as part of refactoring. |
+|[`render()`](render-baseclientsidewebpart.md)     | `protected` | `void` | This API is called to render the web part. There is no base implementation of this API and the web part is required to override this API. |
+|[`renderCompleted()`](rendercompleted-baseclientsidewebpart.md)     | `protected` | `void` | This API should be called by web parts that perform Async rendering. Those web part are required to override the isRenderAsync API and return true. One such example is web parts that render content in an IFrame. The web part initiates the IFrame rendering in the render() API but the actual rendering is complete only after the iframe loading completes. |
+|[`renderError(error)`](rendererror-baseclientsidewebpart.md)     | `protected` | `void` | This API should be used to render an error message in the web part display area. Also logs the error message using the trace logger. |
+
+
+
+
