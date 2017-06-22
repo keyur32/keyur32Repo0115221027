@@ -1,5 +1,8 @@
 {
   "method": "GET",
   "url": "https://graph.microsoft.com/v1.0/me",
+  "headers": [
+    { "name": "Authorization", "value": "INSERT_YOUR_AUTH_TOKEN_HERE" },
+  ],
   "comment": "get_current_user"
 }
